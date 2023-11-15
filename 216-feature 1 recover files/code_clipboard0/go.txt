@@ -1,0 +1,30 @@
+package main
+import (
+  "fmt"
+)
+
+func RecoverFiles(s string ) string{
+  stack := new(Stack)
+  builder := s
+  for i := 0; i < len(s); i++ {
+    _, char := stack.Top()
+    if stack.Length() > 0 && char == '(' && s[i] == ')' {
+      stack.Pop()
+    } else if s[i] == '(' || s[i] == ')'{
+        stack.Push(i, s[i])
+    }
+  }
+  c := stack.Length()
+  for x := 0; x < c; x++ {
+    index, _ := stack.Top()
+    stack.Pop();
+    builder = string(builder[:index]) +  string(builder[index+1:])
+  }
+  
+  return builder
+}
+
+func main() {
+    // driver code
+  fmt.Print(RecoverFiles("11)01(110)001("))
+}

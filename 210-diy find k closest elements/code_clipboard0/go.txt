@@ -1,0 +1,15 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+func findClosestElements(arr []int, k int, x int) []int {
+  
+  result := make([]int, 0)
+
+  // Your code goes here
+
+  return result
+}

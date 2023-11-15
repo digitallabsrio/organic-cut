@@ -1,0 +1,37 @@
+package main
+import "fmt"
+
+func match(cheater, student string) string {
+    window := ""
+    j := 0
+    min := len(cheater) + 1
+    for i := 0; i < len(cheater); i++ {
+        if cheater[i] == student[j] {
+            j++
+            if j == len(student) {
+                end := i + 1
+                j--
+                for j >= 0 {
+                    if (cheater[i] == student[j]){
+                        j-- 
+                    }
+                    i--
+                }
+                j++;
+                i++;
+                if end - i < min {
+                    min = end
+                    window = cheater[i : min]
+                }
+            }
+        }
+    }
+    return window
+}
+
+func main() {
+    cheater := "quiqutit"
+    student := "quit"
+
+    fmt.Printf("Copied Content: %v\n", match(cheater, student))
+}

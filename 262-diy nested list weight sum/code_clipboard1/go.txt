@@ -1,0 +1,11 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+// Check NestedInteger code in the widget above regarding the input type. 
+func nestedSum(nestedList *NestedInteger) int {
+    // write your code here
+    return -1;
+}

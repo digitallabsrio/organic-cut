@@ -1,0 +1,32 @@
+package main
+import (
+    "fmt"
+)
+func possibleMatches(s string, words []string) int {
+    ans := 0
+    waitingList := make(map[byte][]string)
+    for _, w := range words{
+        waitingList[byte(w[0])] = append(waitingList[byte(w[0])], w)
+    }
+    
+    for _, c := range s {
+        advance := waitingList[byte(c)]
+
+        waitingList[byte(c)] = []string{}
+        for _, it := range advance {
+            if(len(it) >= 2) {
+                waitingList[byte(it[1])] = append(waitingList[byte(it[1])], it[1:])
+            } else {
+                ans++
+            }
+        }
+    }
+    return ans
+}
+
+func main() {
+    plagiarised := "abcde"
+    students := []string{"a","bb","acd","ace"}
+
+    fmt.Printf("The content was copied from %d students\n", possibleMatches(plagiarised, students))
+}

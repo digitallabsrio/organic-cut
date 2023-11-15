@@ -1,0 +1,10 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+)
+
+func findAndReplace(s string, indices []int, sources []string, targets []string) string{
+    // write your code here
+    return ""
+}

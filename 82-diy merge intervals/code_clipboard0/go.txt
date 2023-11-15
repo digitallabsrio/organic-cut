@@ -1,0 +1,12 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+  "sort"
+  "reflect"
+)
+
+func mergeIntervals(intervals [][]int) [][]int {
+    // Write your code here.
+    return [][]int{}
+}

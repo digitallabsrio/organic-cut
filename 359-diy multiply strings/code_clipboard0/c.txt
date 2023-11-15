@@ -1,0 +1,7 @@
+public class Solution {
+    public static string Multiply(string num1, string num2) {
+      // Write code here
+        
+        return num1;
+    }
+}

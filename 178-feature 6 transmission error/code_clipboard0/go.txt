@@ -1,0 +1,54 @@
+package main
+import (
+    "fmt"
+)
+
+func isPalindrome(arr []int, left int, right int) bool { 
+    for left < right { 
+        if arr[left] != arr[right] {
+            return false
+        } 
+        left++
+        right-- 
+    } 
+    return true
+}
+
+func transmissionError(arr []int) int { 
+    // Initialize left and right at each end
+    left, right := 0, len(arr) - 1
+
+    for left < right { 
+        // Clause if elemetns at both ends are same
+        if arr[left] == arr[right] { 
+            left++
+            right-- 
+        }  else{ // Clause when mismatch occurs
+            // Check if ignoring left gives a palindromic sequnce 
+            if isPalindrome(arr, left + 1, right){
+                return 1
+            }
+
+            // Check if ignoring right gives a palindromic sequnce
+            if isPalindrome(arr, left, right - 1) {
+                return 1
+            }
+            
+            // Multiple routers exist
+            return -1
+        } 
+    } 
+    // No diversion router was used
+    return 0
+}
+
+func main() {
+
+    arr := []int{1, 2, 3, 3, 4, 2, 1}
+    res := transmissionError(arr)
+    if (res == 1 || res == 0){
+        fmt.Println("Network Sustained. No Transmission Error Occurred!")
+    } else{
+        fmt.Println("Network Broke. Transmission Error Occurred!")
+    }
+}

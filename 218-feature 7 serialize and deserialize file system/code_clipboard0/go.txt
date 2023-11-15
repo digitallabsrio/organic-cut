@@ -1,0 +1,104 @@
+package main
+import (
+  "fmt"
+  "strings"
+  "strconv"
+)
+
+// Encodes a tree to a single string.
+func Serialize (root *Node) string{
+  if root == nil { return "" }
+  result := make([]string, 0)
+  queue := new(Queue)
+  queue.Enqueue(root)
+
+  childrenCount := make([]int, 0)
+
+  for !queue.Empty() {
+    size := queue.Size()
+    for s := 0; s < size; s++ {
+      cur := queue.Peek()
+      queue.Dequeue()
+      childrenCount = append(childrenCount, len(cur.children))
+
+      if (cur == nil) {
+        result = append(result, "n")
+        continue
+      }
+      
+      result = append(result, cur.val)
+
+      for _, next := range cur.children {
+        queue.Enqueue(next)
+      }
+    }
+  }
+    
+  delim := ","
+  return toString(childrenCount, delim) + "|" + strings.Join(result, delim)
+}
+
+// Decodes your encoded data to tree.
+func Deserialize(data string) *Node{
+    if data == "" { return nil }
+
+    countAndResult := strings.Split(data, "|");
+
+    childrenCount := make([]int, 0)
+    temp := strings.Split(countAndResult[0], ",");
+
+    for i := 0; i < len(temp); i++ {
+      n, _ := strconv.Atoi(temp[i])
+      childrenCount = append(childrenCount, n);
+    }
+  
+    allNodes := strings.Split(countAndResult[1], ",");
+
+    root := NewNode(allNodes[0])
+
+    i := 1;
+    allLevelCountIndex := 0;
+
+    queue := new(Queue)
+    queue.Enqueue(root);
+
+    for !queue.Empty() {
+      size := queue.Size()
+      for s := 0; s < size; s++ {
+        cur := queue.Peek()
+        queue.Dequeue()
+        for k := 0; k < childrenCount[allLevelCountIndex]; k++ {
+          if allNodes[i] != "n" {
+            next := NewNode(allNodes[i])
+            cur.children = append(cur.children, next)
+            queue.Enqueue(next)
+          }
+          i++;
+        }
+        allLevelCountIndex++;
+      }
+    }
+    return root
+}
+
+func main(){
+    childrenroot := make([]*Node, 0)
+    childrenD1 := make([]*Node, 0)
+    childrenD1 = append(childrenD1, NewNode("F3"))
+    childrenD1 = append(childrenD1, NewNode("F4"))
+    childrenroot = append(childrenroot, FillNode("D1", childrenD1))
+    childrenroot = append(childrenroot, NewNode("F1"))
+    childrenroot = append(childrenroot, NewNode("F2"))
+    root := FillNode("r", childrenroot)
+    fmt.Println("Serializing the tree:")
+    s := Serialize(root);
+    fmt.Println(s)
+    fmt.Println("Deserializing the string:")
+
+    flag := make([]bool,6)
+    for i := 0; i < len(flag); i++{
+      flag[i] = true
+    }
+
+    PrintNTree(Deserialize(s), flag, 0, false)
+}

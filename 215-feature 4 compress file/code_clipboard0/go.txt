@@ -1,0 +1,51 @@
+package main
+import (
+    "fmt"
+)
+
+func dfs(word string, wordSet map[string]bool, cache map[string]bool) bool {
+    // If result for current word already calculated then
+    // return from cache
+    if _, ok := cache[word]; ok {
+        return cache[word]
+    }
+
+    // Traverse over the word to generate all combinations
+    for i := 1; i < len(word); i++ {
+      // Divide the word into prefix and suffix
+        prefix, suffix := word[:i],  word[i:]
+        if _, ok := wordSet[prefix]; ok {
+            if _, ok := wordSet[suffix]; ok || dfs(suffix, wordSet, cache) {
+                cache[word] = true
+                return true
+            }
+        }
+    }
+    cache[word] = false
+    return false
+}
+
+func identifyConcatenations(words []string) []string{
+    var res []string
+    // Set for O(1) lookups
+    wordSet := make(map[string]bool)
+    for _, word := range words {
+        wordSet[word] = true
+    }
+    cache := make(map[string]bool)
+
+    // Process for each word
+    for _, word := range words {
+        if dfs(word, wordSet, cache) {
+            res = append(res, word)
+        }
+    }
+
+    return res
+}
+
+func main() {
+    // Driver Code
+    fileWords := []string{"n", "cat", "cats", "dog", "catsndog"}
+    print(identifyConcatenations(fileWords))
+}

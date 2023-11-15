@@ -1,0 +1,70 @@
+package main
+import (
+  "fmt"
+  "strconv"
+)
+
+type TreeNode struct{
+    val int
+    left *TreeNode
+    right *TreeNode
+}
+
+func NewDeque() *Deque { 
+    return &Deque{} 
+}
+
+func zigzagLevelOrder(root *TreeNode) [][]int {
+    var results [][]int
+    if root == nil {
+        return results
+    } 
+
+    dq := NewDeque()
+    dq.PushBack(root)
+
+    // To iterate the tree in a zigzag order
+
+    reverse := false
+    
+    for !dq.Empty(){
+        size := dq.Len()
+        results = append(results, []int{})
+        for i := 0; i < size; i++ {
+            if !reverse {
+                node := dq.Front()
+                results[len(results) - 1] = append(results[len(results) - 1], node.val)
+                dq.PopFront()
+                if node.left != nil {
+                    dq.PushBack(node.left)
+                }  
+                if node.right != nil {
+                    dq.PushBack(node.right)
+                }
+            } else{
+                node := dq.Back()
+                results[len(results) - 1] = append(results[len(results) - 1], node.val)
+                dq.PopBack()
+                if node.right != nil {
+                    dq.PushFront(node.right)
+                }  
+                if node.left != nil {
+                    dq.PushFront(node.left)
+                }               
+            }
+        }
+        reverse = !reverse
+    }
+    return results
+}
+
+func main() {
+    // Driver code
+    root := &TreeNode{val: 3}
+    root.left = &TreeNode{val: 6}
+    root.right = &TreeNode{val: 9}
+
+    root.right.left = &TreeNode{val: 15}
+    root.right.right = &TreeNode{val: 12}
+    print(zigzagLevelOrder(root))
+}

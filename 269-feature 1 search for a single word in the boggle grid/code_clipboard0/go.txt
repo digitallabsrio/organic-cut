@@ -1,0 +1,55 @@
+package main
+import "fmt"
+
+func dfs(row int, col int, suffix string, grid [][]byte) bool{
+  // base case
+    if len(suffix) == 0{
+        return true
+    }
+
+  // check if this is a valid cell
+    if row < 0 || row == 5 || col < 0 || col == 5 || grid[row][col] != suffix[0] {
+        return false
+    }     
+    ret := false
+
+    // mark the cell as visited
+    grid[row][col] = '#'
+
+    // explore the four neighboring directions
+    offsets := [][]int{{0,1}, {1, 0}, {0, -1}, {-1, 0}}
+    for _, offset := range offsets {
+        rowOffset := offset[0]
+        colOffset := offset[1]
+        ret = dfs(row + rowOffset, col + colOffset, suffix[1:], grid)
+        // break instead of return directly to do some cleanup afterwards
+        if ret{
+            break
+        }
+    }
+    // this will revert back the original value of the cell
+    grid[row][col] = suffix[0]
+
+    return ret
+}
+
+func exists(grid[][]byte, word string) bool{
+    for row := 0; row < 5; row++{
+        for col := 0; col< 5; col++{
+            if(dfs(row, col, word, grid)){
+                return true
+            }
+        }
+    }
+    return false
+}
+
+
+func main() {
+    grid := [][]byte{{'C', 'S', 'L', 'I', 'M'}, {'O', 'I', 'L', 'M', 'O'}, {'O', 'L', 'I', 'E', 'O'}, {'R', 'T', 'A', 'S', 'N'}, {'S', 'I', 'T', 'A', 'C'}};
+    word := "COIL"
+    fmt.Println(exists(grid, word))
+
+    word = "COCOON"
+    fmt.Println(exists(grid, word))
+}

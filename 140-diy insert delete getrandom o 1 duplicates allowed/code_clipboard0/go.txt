@@ -1,0 +1,31 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+type RandomizedCollection struct {
+    // declare your data members here!
+}
+   
+
+func newRandomizedCollection() *RandomizedCollection{
+    // Initialize your data members here.
+    return &RandomizedCollection{}
+}
+
+func (rc *RandomizedCollection) insert(val int) bool{
+    // Inserts a value to the set. Returns true if the set did not already contain the specified element.
+    return false
+}
+
+func (rc *RandomizedCollection) remove(val int) bool{
+    // Removes a value from the set. Returns true if the set contained the specified element.
+    return false
+}
+
+func (rc *RandomizedCollection) getRandom() int{
+    // Get a random element from the set.
+    return 0
+}

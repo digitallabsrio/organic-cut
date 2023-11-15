@@ -1,0 +1,30 @@
+package main
+import (
+    "fmt"
+    "math"
+)
+
+
+func clockAngle(hour int, minutes int) float64 {
+    
+    oneMinAngle := 6
+    oneHourAngle := 30
+    
+    minutesAngle := float64(oneMinAngle * minutes)
+    hourAngle := (float64(hour % 12) + float64(minutes) / 60.0) * float64(oneHourAngle)
+    
+    difference := math.Abs(hourAngle - minutesAngle)
+    
+    return math.Min(difference, 360 - difference)
+}
+
+func main(){
+    fmt.Println("Hour: 1, Minutes: 34")
+    fmt.Println("Angle:",clockAngle(1,34))
+
+    fmt.Println("Hour: 3, Minutes: 7")
+    fmt.Println("Angle:",clockAngle(3,7))
+
+    fmt.Println("Hour: 3, Minutes: 30")
+    fmt.Println("Angle:",clockAngle(3,30))
+}

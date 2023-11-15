@@ -1,0 +1,32 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+)
+
+type FileSystem struct{
+    // declare your data structures here
+}
+
+func newFileSystem() FileSystem {
+    // Initialize your data structures here
+    return FileSystem{}
+}
+
+func (fs FileSystem) ls(path string) []string{
+    // write your code here
+    return []string{}
+}
+
+func (fs FileSystem) mkdir(path string) {
+    // write your code here
+}
+
+func (fs FileSystem) AddContentToFile(filePath, content string) {
+    // write your code here
+}
+
+func (fs FileSystem) ReadContentFromFile(filePath string) string{
+    // write your code here
+    return "";
+}

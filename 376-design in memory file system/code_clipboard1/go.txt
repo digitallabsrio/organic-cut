@@ -1,0 +1,106 @@
+package main
+import (
+    "fmt"
+    "strings"
+    "sort"
+)
+
+type File struct{
+    isfile bool
+    files map[string]*File
+    content string
+}
+
+type FileSystem struct{
+    root *File
+}
+
+func newFileSystem() FileSystem {
+    file := &File{files: make(map[string]*File)}
+    fs := FileSystem{root: file}
+    return fs
+}
+
+func (fs FileSystem) ls(path string) []string{
+    t := fs.root
+    var files []string
+    if path != "/" {
+        delim := "/"
+        d := strings.Split(path, delim)
+        // remove the empty entry
+        d = d[1:]
+        for i := 0; i < len(d); i++ {
+            t = t.files[d[i]]
+        }
+        if (t.isfile) {
+            files = append(files, d[len(d) - 1])
+            return files
+        }
+    }
+    var resFiles []string
+    for first, _ := range t.files {
+        resFiles = append(resFiles, first)
+    }
+
+    sort.Strings(resFiles)
+    return resFiles
+}
+
+func (fs FileSystem) mkdir(path string) {
+    t := fs.root
+    delim := "/"
+    d := strings.Split(path, delim)
+    // remove the empty entry
+    d = d[1:]
+    for i := 0; i < len(d); i++ {
+        if _, ok := t.files[d[i]]; !ok {
+            t.files[d[i]] = &File{files: make(map[string]*File)}
+        }
+        t = t.files[d[i]]
+    }
+}
+
+func (fs FileSystem) AddContentToFile(filePath, content string) {
+    t := fs.root
+    delim := "/"
+    d := strings.Split(filePath, delim)
+    // remove the empty entry
+    d = d[1:]
+    for i := 0; i < len(d) - 1; i++ {
+        t = t.files[d[i]]
+    }
+    if _, ok := t.files[d[len(d) - 1]]; !ok{
+        t.files[d[len(d) - 1]] = &File{files: make(map[string]*File)}
+    }
+    t = t.files[d[len(d) - 1]]
+    t.isfile = true
+    t.content = t.content + content
+}
+
+func (fs FileSystem) ReadContentFromFile(filePath string) string{
+    t := fs.root
+    delim := "/"
+    d := strings.Split(filePath, delim)
+    // remove the empty entry
+    d = d[1:]
+    for i := 0; i < len(d) - 1; i++ {
+        t = t.files[d[i]];
+    }
+    return t.files[d[len(d) - 1]].content
+}
+
+
+func main() {
+    // Driver code
+    fs := newFileSystem()
+    
+    print(fs.ls("/"))
+    fs.mkdir("/dir1/dir2/dir3")
+    fs.mkdir("/dir4/dir3/dir1")
+    fs.AddContentToFile("/dir1/dir2/dir3/file1", "File")
+    print(fs.ls("/"))
+
+    fmt.Println(fs.ReadContentFromFile("/dir1/dir2/dir3/file1"))
+    fs.AddContentToFile("/dir1/dir2/dir3/file1", " System")
+    fmt.Println(fs.ReadContentFromFile("/dir1/dir2/dir3/file1"))
+}

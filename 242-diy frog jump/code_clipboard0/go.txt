@@ -1,0 +1,12 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+
+func FrogJump(stones []int) bool {
+    // Write code here
+    return false
+}

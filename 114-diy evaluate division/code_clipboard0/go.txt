@@ -1,0 +1,10 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+)
+
+func evaluate(equations [][]string, values []float64, queries [][]string) []float64{
+    // write your code here
+    return []float64{}
+}

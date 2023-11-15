@@ -1,0 +1,103 @@
+package main
+import (
+  "fmt"
+)
+
+var DIGITS = []byte { '1', '2', '3', '4', '5', '6', '7', '8', '9' }
+    
+func SolveSudoku(board [][] byte) {
+  Solve(board, 0, 0)
+}
+    
+func Solve(board [][]byte, r int, c int) bool{
+  // Move right until you get to end, then restart at next row
+  if c == 9 { return Solve(board, r + 1, 0) }
+  if r == 9 { return true }
+        
+  if board[r][c] != '.' { return Solve(board, r, c + 1) }
+        
+  for _, d := range DIGITS {
+    if CanPlay(board, r, c, d) {
+      board[r][c] = d
+      // If can solve remaining then done
+      if Solve(board, r, c + 1) { return true }
+      // Backtracking
+        board[r][c] = '.'
+      }
+  }
+  return false;
+}
+    
+func CanPlay(board [][]byte, r int, c int, x byte) bool {
+  // Check column
+  for i := 0; i < 9; i++ {
+    if board[r][i] == x { return false }
+  }
+  // Check row
+  for i := 0; i < 9; i++{
+    if board[i][c] == x { return false }
+  }
+  // Check sub-matrix
+  r0 := 3 * (r/3)
+  r1 := 3 * (r/3) + 3
+  c0 := 3 * (c/3)
+  c1 := 3 * (c/3) + 3
+  for i := r0; i < r1; i++ {
+    for j := c0; j < c1; j++ {
+      if board[i][j] == x { return false }
+    }
+  }
+  return true;
+}
+
+func main() {
+  board := [][]byte {
+            {'.','.','.','.','.','.','.','7','.'},
+            {'2','7','5','.','.','.','3','1','4'},
+            {'.','.','.','.','2','7','.','5','.'},
+            {'9','8','.','.','.','.','.','3','1'},
+            {'.','3','1','8','.','4','.','.','.'},
+            {'.','.','.','1','.','.','8','.','5'},
+            {'7','.','6','2','.','.','1','8','.'},
+            {'.','9','.','7','.','.','.','.','.'},
+            {'4','1','.','.','.','5','.','.','7'}}
+
+  fmt.Print("    ")
+  fmt.Print("Unsolved Board")
+  fmt.Println("")
+
+  for x := 0; x < 9; x++ {
+    for y := 0; y < 9; y++ {
+      if y % 3 == 0 {
+        fmt.Print("  ")
+        
+      }
+      fmt.Print(string(board[x][y]))
+      fmt.Print(" ")
+    }
+    if x % 3 == 2 {
+      fmt.Println("");
+    }
+    fmt.Println("");
+  }
+    
+  SolveSudoku(board)
+ 
+  fmt.Print("        ")
+  fmt.Print("Solution")
+  fmt.Println("")
+
+  for x := 0; x < 9; x++ {
+    for y := 0; y < 9; y++ {
+      if y % 3 == 0 {
+        fmt.Print("  ")
+      }
+      fmt.Print(string(board[x][y]))
+      fmt.Print(" ")
+    }
+    if x % 3 == 2 {
+      fmt.Println("");
+    }
+    fmt.Println("");
+  }
+}

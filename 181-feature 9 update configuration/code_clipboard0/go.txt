@@ -1,0 +1,75 @@
+package main
+import (
+    "fmt"
+    "container/list"
+)
+
+type Pair struct {
+    first, second int
+}
+
+func updateConfiguration(grid [][]int) int{
+    queue := list.New()
+
+    // Step 1). build the initial set of updated routers
+    rows, cols := len(grid), len(grid[0])
+
+    for r := 0; r < rows; r++ {
+        for c := 0; c < cols; c++ {
+            if grid[r][c] == 2 {
+                queue.PushBack(Pair{first: r, second: c});
+            }
+        }
+    }
+
+    // Mark the round / level, _i.e_ the ticker of timestamp
+    queue.PushBack(Pair{first: -1, second: -1});
+
+    // Step 2). start the transmitting process via BFS
+    minutesElapsed := -1;
+    // Four Neigbors, up, right, down and left
+    directions := [][]int{ {-1, 0}, {0, 1}, {1, 0}, {0, -1}}
+
+    for queue.Len() != 0 {
+        p := queue.Front()
+        queue.Remove(p)
+        q := p.Value.(Pair)
+        row := q.first
+        col := q.second
+        if row == -1 {
+            // We finish one round of processing
+            minutesElapsed++;
+            // to avoid the endless loop
+            if queue.Len() != 0 {
+                queue.PushBack(Pair{first: -1, second: -1})
+            }
+        } else {
+            // this is an updated router
+            // then it would transmit the update to its neighbors
+            for _, d := range directions {
+                neighborRow := row + d[0]
+                neighborCol := col + d[1]
+                if (neighborRow >= 0 && neighborRow < rows && 
+                    neighborCol >= 0 && neighborCol < cols) {
+                    if (grid[neighborRow][neighborCol] == 1) {
+                        // this router would be updated
+                        grid[neighborRow][neighborCol] = 2;
+                        // this router would then transmit to other routers
+                        queue.PushBack(Pair{first: neighborRow, second: neighborCol});
+                    }
+                }
+            }
+        }
+    }  
+
+    // return elapsed minutes
+    return minutesElapsed
+}
+
+
+
+func main() {
+  // Driver Code
+  grid := [][]int{{1, 1, 0, 0, 1}, {0, 1, 0, 1, 1}, {1, 1, 2, 0, 1}, {1, 0, 1, 1, 1}, {1, 1, 0, 1, 1}}
+  fmt.Println(updateConfiguration(grid))
+}

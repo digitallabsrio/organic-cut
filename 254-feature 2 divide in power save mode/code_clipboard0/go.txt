@@ -1,0 +1,53 @@
+package main
+import (
+  "fmt"
+  "math"
+)
+
+var HALF_MIN = -4503599600000000
+
+func Divide(Dividend int, Divisor int) int{
+    if (Dividend == math.MinInt64 && Divisor == -1) {
+        return math.MaxInt64
+    }
+
+    negatives := 2
+    if Dividend > 0 {
+        negatives--
+        Dividend = -Dividend
+    }
+    if Divisor > 0 {
+        negatives--
+        Divisor = -Divisor
+    }
+
+    highestDouble := Divisor
+    highestTwoPower := -1
+
+    for highestDouble >= HALF_MIN && Dividend <= highestDouble * 2 {
+        highestTwoPower += highestTwoPower
+        highestDouble += highestDouble
+    }
+    quotient := 0
+    for Dividend <= Divisor {
+        if (Dividend <= highestDouble) {
+            quotient += highestTwoPower
+            Dividend -= highestDouble
+        }
+        highestTwoPower >>= 1
+        highestDouble >>= 1
+    }
+
+    if negatives != 1{
+        return -quotient
+    } else{
+        return quotient
+    }
+}
+
+func main(){
+    Dividend := 8
+	Divisor := 2
+    result := Divide(Dividend, Divisor)
+    fmt.Println(result)
+}

@@ -1,0 +1,53 @@
+package main
+import (
+  "fmt"
+)
+
+type RandomPickWithWeight struct{
+    // write your code
+    // declare the data structures here
+}
+
+func newRandomPickWithWeight(w []int) *RandomPickWithWeight {
+    // Initialize the data structrues here
+    return &RandomPickWithWeight{}
+}
+
+func (s *RandomPickWithWeight) PickIndex() int{
+    return - 1;
+}
+
+func main() {
+    // Driver code
+    frequencies := make(map[int]int)
+    distributions1 := []int{1, 2, 3, 4, 5}
+    for _, d := range distributions1 {
+        frequencies[d] = 0
+    }
+    sol := newRandomPickWithWeight(distributions1)
+    
+    for i := 0; i < 100; i++ {
+        index := sol.PickIndex()
+        if index >=0 && index < len(distributions1) {
+            element := distributions1[index]
+            frequencies[element] += 1
+        }
+    }
+    printDict(frequencies)
+
+    frequencies = make(map[int]int)
+    distributions2 := []int{1, 12, 23, 34, 45, 56, 67, 78, 89, 90}
+    for _, d := range distributions2 {
+        frequencies[d] = 0
+    }
+    sol2 := newRandomPickWithWeight(distributions2)
+    
+    for i := 0; i < 100; i++ {
+        index := sol2.PickIndex()
+        if index >=0 && index < len(distributions2) {
+            element := distributions2[index]
+            frequencies[element] += 1
+        }
+    }
+    printDict(frequencies)
+}

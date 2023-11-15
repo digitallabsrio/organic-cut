@@ -1,0 +1,60 @@
+package main
+import (
+  "fmt"
+)
+
+type NestedIterator struct {
+  stack Stack
+}
+ 
+func Constructor(nestedList []*NestedDirectories) *NestedIterator {
+    n := new(NestedIterator)
+    for i := len(nestedList) - 1; i >= 0; i-- {
+        n.stack.Push(nestedList[i])
+    }
+    return n
+}
+
+func (this *NestedIterator) HasNext() bool {
+    for !this.stack.Empty() {
+        top := this.stack.Top()
+        if top.IsFile(){ return true }
+
+        topList := top.GetList()
+        this.stack.Pop()
+        for i := len(topList) - 1; i >= 0; i-- {
+            this.stack.Push(topList[i])
+        }
+    }
+    return false
+}
+
+func (this *NestedIterator) Next() string {
+    if this.HasNext() {
+        top := this.stack.Top()
+        this.stack.Pop()
+        return top.GetFile().(string)
+    }       
+    return ""
+}
+
+func main() {
+    // Driver Code
+    nestedList := make([]*NestedDirectories, 0)
+    l1 := InitNestedDirectories()
+    nestedList = append(nestedList, NewNestedDirectories("F1"))
+    l1.Add(NewNestedDirectories("F2"))
+    l1.Add(NewNestedDirectories("D1"))
+    nestedList = append(nestedList, l1)
+    nestedList = append(nestedList, NewNestedDirectories("D2"))
+
+    itr := Constructor(nestedList)
+    fmt.Println("Original structure: [F1, [F2, D1], D2]")
+
+    
+    fmt.Println("Output:")
+    for itr.HasNext() {
+        fmt.Print("itr.Next(): ") 
+        fmt.Println(itr.Next())
+    }
+}

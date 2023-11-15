@@ -1,0 +1,85 @@
+package main
+import (
+  "fmt"
+  "container/list"
+)
+
+type Pair struct {
+    first string
+    second int
+}
+
+func minimumMoves(beginWord string, endWord string, wordList []string) int{
+
+    // Since all words are of same length.
+    L := len(beginWord)
+
+    // Dictionary to hold combination of words that can be formed,
+    // from any given word. By changing one letter at a time.
+    allComboDict := make(map[string][]string)
+
+    for _, word := range wordList {
+        for i := 0; i < L; i++ {
+            // Key is the generic word
+            // Value is a list of words which have the same intermediate generic word.
+            newWord := word[0: i] + "*" + word[i + 1:]
+            var transformations []string
+            if val, ok := allComboDict[newWord]; ok  {
+                transformations = val
+            }  
+            transformations = append(transformations, word)
+            allComboDict[newWord] = transformations
+        }
+    }
+
+    // Queue for BFS
+    Q := list.New()
+    Q.PushBack(Pair{beginWord, 0})
+
+    // Visited to make sure we don't repeat processing same word.
+    visited := make(map[string]bool)
+    visited[beginWord] = true
+
+    for Q.Len() != 0 {
+        tempNode := Q.Front()
+        Q.Remove(tempNode)
+        node := tempNode.Value.(Pair)
+        word := node.first
+        level := node.second;
+        for i := 0; i < L; i++ {
+
+            // Intermediate words for current word
+            newWord := word[0: i] + "*" + word[i + 1:]
+
+            // Next states are all the words which share the same intermediate state.
+            var temp []string
+            if _, ok := allComboDict[newWord]; ok{
+                temp = allComboDict[newWord]
+            }
+            for _, adjacentWord := range temp {
+                // If at any point if we find what we are looking for
+                // i.e. the end word - we can return with the answer.
+                if adjacentWord == endWord {
+                    return level + 1;
+                }
+                // Otherwise, add it to the BFS Queue. Also mark it visited
+                if _, ok := visited[adjacentWord]; !ok {
+                    visited[adjacentWord] = true
+                    Q.PushBack(Pair{adjacentWord, level + 1})
+                }
+            }
+        }
+    }
+
+    return 0
+}
+
+func main() {
+    // Driver code
+
+    initialWord := "hit"
+    finalWord := "cog"
+    wordGroup := []string{"hot","dot","dog","lot","log","cog"};
+
+    fmt.Println("The shortest sequece is of length:", minimumMoves(initialWord, finalWord, wordGroup))
+}

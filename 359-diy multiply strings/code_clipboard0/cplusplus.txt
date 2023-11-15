@@ -1,0 +1,5 @@
+std::string multiply(std::string num1, std::string num2) {
+    // write your code here
+    
+    return num1;
+}

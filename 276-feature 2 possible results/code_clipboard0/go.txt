@@ -1,0 +1,92 @@
+package main
+import (
+  "fmt"
+)
+func difference(a, b map[string]bool) map[string]bool{
+    temp := make(map[string]bool)
+    for key, _ := range a {
+        if _, ok := b[key]; !ok {
+            temp[key] = true
+        }
+    }
+    for key, _ := range b {
+        if _, ok := a[key]; !ok {
+            temp[key] = true
+        }
+    }
+    return temp
+}
+
+func dfs(w string, endWord string, graph map[string]map[string]bool, path []string, ans *[][]string){
+    if(w == endWord){
+        (*ans) = append((*ans), path)
+    } else{
+        for nw, _ := range graph[w] {
+            path = append(path, nw)
+            dfs(nw, endWord, graph, path, ans)
+            path = path[:len(path) - 1]
+        }      
+    }
+}
+
+func possibleResults(beginWord string, endWord string, wordList []string) [][]string{
+    var res [][]string
+    if beginWord == endWord {
+        res = append(res, []string{beginWord})
+        return res
+    }
+    
+    graph := make(map[string]map[string]bool)
+    helper := "qwertyuiopasdfghjklzxcvbnm"
+    dicSet := make(map[string]bool)
+    for _, wl := range wordList {
+        dicSet[wl] = true
+    }
+    
+    layer := make(map[string]bool)
+    layer[beginWord] = true
+    delete(dicSet, beginWord)
+    stop := false
+    for len(layer) > 0 && !stop {
+        newLayer := make(map[string]bool)
+        for w, _ := range layer {
+            // construct next word, O(len(word) * 26)
+            for i := 0; i < len(w) ; i++ {
+                for _, c := range helper {
+                    nw := w[:i] + string(c) + w[i+1:]
+                    if _, ok := dicSet[nw]; ok {
+                        newLayer[nw] = true
+                        if _, ok := graph[w]; !ok {
+                            graph[w] = make(map[string]bool)
+                        }
+                        graph[w][nw] = true
+                    }   
+                    // if we find endWord in this layer, there is no need to do next layer
+                    if nw == endWord {
+                        stop = true
+                    }
+                }
+            }
+        }
+        // removing unecessary nodes
+        dicSet = difference(dicSet, newLayer)
+        layer = newLayer
+    }
+        
+            
+    
+    path := []string{beginWord}
+    dfs(beginWord, endWord, graph, path, &res)
+
+    return res
+}
+
+func main() {
+    // Driver code
+    initialWord := "hit"
+    finalWord := "cog"
+    wordGroup := []string{"hot","dot","dog","lot","log","cog","lit"}
+
+    print(possibleResults(initialWord, finalWord, wordGroup))
+
+}

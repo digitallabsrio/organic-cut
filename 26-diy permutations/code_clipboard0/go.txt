@@ -1,0 +1,17 @@
+package main
+import (
+   "fmt"
+   "sort"
+   "reflect"
+   "encoding/json"
+   "strconv"
+)
+
+func permute(nums []int) [][]int {
+
+    var output [][]int
+
+    // Your code goes here
+
+    return output
+}

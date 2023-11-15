@@ -1,0 +1,43 @@
+package main
+
+import (
+  "fmt"
+  "encoding/json"
+)
+
+type LFUCache struct {
+	capacity int
+	size int
+	minFreq int
+	freqDict map[int]*LinkedList
+	keyDict map[int]*LinkedListNode       
+}
+
+func newLFUCache(capacity int) *LFUCache {
+	// Initialize your data structures here
+	return &LFUCache{capacity: capacity, freqDict : make(map[int]*LinkedList), keyDict : make(map[int]*LinkedListNode)}
+}
+
+func (lf *LFUCache) Get(key int) *LinkedListNode{
+	// write your code here
+	return nil
+}
+
+func (lf *LFUCache) Set(key, value int){
+	// write your code here
+}
+
+func (lf *LFUCache) PrintDict(){
+	for first, second := range lf.keyDict {
+		fmt.Printf("(%v,%v)", first, second.val)
+	}
+	fmt.Println("")
+}
+
+func (lf *LFUCache) Print() string{
+    str := ""
+    for key, data := range lf.keyDict {
+      str += fmt.Sprintf("(%v,%v)",  key, data.val) 
+    }
+    return str
+}

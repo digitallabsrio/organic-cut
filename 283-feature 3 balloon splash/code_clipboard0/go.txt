@@ -1,0 +1,52 @@
+package main
+import (
+  "fmt"
+  "strings"
+)
+
+func RemoveDuplicates(str string, k int) string {
+    s := []rune(str)
+    stack := make([]map[rune]int, 0)
+    for _, char := range s {
+        if len(stack) > 0 {
+            var ch rune
+            for key, _ := range stack[len(stack) - 1]{ 
+                // Note: This loop will only be executed one time with O(1) time complexity
+                ch = key
+            }
+            if ch == char{
+                stack[len(stack) - 1][char] += 1 
+                // If the character count reaches k, pop it from the stack
+                count := 0
+                for _, value := range stack[len(stack) - 1]{ 
+                    // This loop will only be executed one time with O(1) time complexity
+                    count = value
+                }
+                if count == k {
+                    stack = stack[:len(stack) - 1]
+                }
+                continue
+            }      
+        } 
+        temp := map[rune]int {char : 1}
+        stack = append(stack, temp)
+    }
+    result := ""
+    // Obtain the remaining characters from the stack and concatenate in the result
+    for _, Map := range stack {
+        var char rune
+        count := 0
+        for key, value := range Map{ 
+            // Note: This loop will only be executed one time with O(1) time complexity
+            char = key
+            count = value
+        }
+        result += strings.Repeat(string(char), count)
+    }
+    return result
+}
+
+
+func main() {
+    fmt.Println(RemoveDuplicates("sammmaddkkkdasa", 3))
+}

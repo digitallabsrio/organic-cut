@@ -1,0 +1,10 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+)
+
+func isBipartite(graph [][]int) bool {
+    // write your code here
+    return false
+}

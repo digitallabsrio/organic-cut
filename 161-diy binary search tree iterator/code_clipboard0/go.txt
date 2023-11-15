@@ -1,0 +1,24 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+type BSTIterator struct{
+    // write your code here
+    // declare your data structures here
+}
+
+func newBSTIterator(root *Node) *BSTIterator{
+    // Initialize your data structures here
+    return &BSTIterator{}
+}
+
+func (b *BSTIterator) HasNext() bool {
+    return false
+}
+
+func (b *BSTIterator) Next() int{
+    return -1
+}

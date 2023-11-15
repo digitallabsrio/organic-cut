@@ -1,0 +1,36 @@
+package main
+import (
+  "fmt"
+  "strconv"
+)
+
+type TreeNode struct{
+    val int
+    left *TreeNode
+    right *TreeNode
+}
+
+func invertTree(root *TreeNode) *TreeNode{
+    if root == nil {
+        return root
+    }
+
+    right := invertTree(root.right)
+    left := invertTree(root.left)
+    root.left = right
+    root.right = left
+    return root
+}
+
+func main() {
+    root := &TreeNode{val: 1}
+    root.left = &TreeNode{val: 2}
+    root.right = &TreeNode{val: 3}
+    root.left.left = &TreeNode{val: 4}
+    root.left.right = &TreeNode{val: 5}
+
+    root.right.left = &TreeNode{val: 6}
+    root.right.right = &TreeNode{val: 7}
+
+    print(invertTree(root))
+}

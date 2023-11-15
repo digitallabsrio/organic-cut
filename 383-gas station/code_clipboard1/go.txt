@@ -1,0 +1,48 @@
+package main
+import (
+  "fmt"
+  "strconv"
+)
+
+func CanCompleteCircuit(Gas []int, Cost []int) int {
+  n := len(Gas)
+
+  // Initiate the required variables.
+  TotalTank := 0
+  CurrTank := 0
+  StartingStation := 0
+
+  // Iterate over all the stations 
+  for i := 0; i < n; i++ {
+    // update the varaibles at each step
+    TotalTank += Gas[i] - Cost[i]
+    CurrTank += Gas[i] - Cost[i]
+
+    // If we cannot reach the current station
+    if CurrTank < 0 {
+      // Make the next station as a new starting point and reset the tank to 
+      // start with an empty tank.
+      StartingStation = i + 1;
+      CurrTank = 0
+    }
+  }
+
+  if(TotalTank >= 0) {
+    return StartingStation
+  } else {
+    return -1
+  }
+}
+
+func main() {
+  Gas := []int{1,2,3,4,5}
+  Cost := []int{3,4,5,1,2}
+  index := CanCompleteCircuit(Gas, Cost)
+
+  if(index == -1) {
+    fmt.Println("Output: " + strconv.Itoa(index))
+    fmt.Println("We cannot make the round trip once, no matter where you start.")
+  } else {
+    fmt.Println("Starting Gas station's index is " + strconv.Itoa(index) + ".")
+  }
+}

@@ -1,0 +1,54 @@
+package main
+
+import (
+	"fmt"
+    "regexp"
+    "math"
+)
+
+func mostCommonToken(code string, keywords []string) string{
+    // Replacing the syntax with spaces
+    // Convert all the characters other than Alphanumeric into spaces
+    // and insert them into normalizedCode variable
+    re := regexp.MustCompile(`[^a-zA-Z0-9]`)
+    normalizedCode :=  re.ReplaceAllString(code, " ")
+    // Split based on the spaces
+    delim := "\\s+"
+    tokens := regexp.MustCompile(delim).Split(normalizedCode, math.MaxInt64)
+    count := make(map[string]int)
+    bannedWords := make(map[string]bool)
+    for _, i := range keywords{
+        bannedWords[i] = true
+    }
+
+    // Count occurence of each token, excluding the keywords 
+    for _, token := range tokens{
+        if _, ok := bannedWords[token]; !ok{
+            if _, ok := count[token]; !ok{
+                count[token] = 0
+            }
+            count[token] += 1
+        }   
+    }
+    // return the maximum valued key
+    max := math.MinInt64
+    maxKey := ""
+    for key, val := range count{ 
+        if val > max {
+            maxKey = key
+            max = val
+        }
+    }
+    return maxKey
+}
+
+func main() {
+    code := `int main() {
+        int value = getValue();
+        int sum = value + getRandom();
+        int subs = value - getRandom();
+        return 0;
+    }`
+    keywords := []string{"int", "main", "return"}
+    fmt.Println(mostCommonToken(code, keywords))
+}

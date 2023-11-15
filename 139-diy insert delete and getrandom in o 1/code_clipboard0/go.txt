@@ -1,0 +1,30 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+  "strconv"
+)
+
+type RandomSet struct{
+    // declare your data structures here
+}
+
+func newRandomSet() *RandomSet {
+    // Initialize your data structure here.
+    return &RandomSet{}
+}
+
+func (r *RandomSet) Insert(val int) bool{
+    // Inserts a value to the set. Returns true if the set did not already contain the specified element.
+    return false
+}
+
+func (r *RandomSet) Remove(val int) bool {
+    // Removes a value from the set. Returns true if the set contained the specified element.
+    return false
+}
+
+func (r *RandomSet) GetRandomData() int{
+    // Get a random element from the set.
+    return 0
+}

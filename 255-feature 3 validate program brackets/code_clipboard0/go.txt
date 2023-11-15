@@ -1,0 +1,39 @@
+package main
+import "fmt"
+
+func Valid(s string) bool{
+    
+    stack := []byte{}
+    matches := map[byte]byte{
+        '}': '{',
+        ']': '[',
+        ')': '('}
+
+    startingMatches := map[byte]byte{
+        '{': '}',
+        '[': ']',
+        '(': ')'}
+    
+    for i := 0; i < len(s); i++ {
+        
+        if _, ok := matches[s[i]]; len(stack) == 0 && ok {
+            stack = append(stack, '0') // If a closing bracket is received first
+            break
+        }
+        if len(stack) > 0 && stack[len(stack) - 1] == matches[s[i]] {
+            stack = stack[:len(stack) - 1]
+        } 
+        if _, ok := startingMatches[s[i]]; ok {
+            stack = append(stack, s[i])
+            
+        }
+    }
+    return len(stack) == 0
+}
+
+func main(){
+    s := "let output = function () { console.log('Anonymous function'); };"
+
+    isValid := Valid(s)
+    fmt.Println(isValid)
+}

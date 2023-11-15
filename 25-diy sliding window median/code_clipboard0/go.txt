@@ -1,0 +1,14 @@
+package main
+import (
+    "fmt"
+    "encoding/json"
+)
+
+func medianSlidingWindow(nums []int, k int) []float64 {
+    var medians []float64
+    
+    // Your code goes here
+
+    return medians
+    
+}

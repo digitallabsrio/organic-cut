@@ -1,0 +1,38 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "strings"
+  "math"
+)
+
+func FlattenBinaryTree (root *TreeNode) *TreeNode{
+  if root == nil{ return nil}
+  
+  current := root 
+  for current != nil{
+    if current.left != nil{
+      last := current.left 
+      // If the current node has right child
+      for last.right != nil{
+          last = last.right 
+      }
+      // If the current node does not have right child
+      last.right = current.right 
+      current.right = current.left 
+      current.left = nil 
+    }
+    current = current.right 
+  }
+  return root 
+}
+
+func main(){
+    root := NewTreeNode(1) 
+    root.left = NewTreeNode(2) 
+    root.right = NewTreeNode(4) 
+    root.left.left = NewTreeNode(3) 
+    root.right.left = NewTreeNode(5) 
+    root.right.right = NewTreeNode(6) 
+    DisplayTree(FlattenBinaryTree(root))
+}

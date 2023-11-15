@@ -1,0 +1,19 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+  "strings"
+)
+
+// Encodes a tree to a single string.
+func Serialize(root *Node) string{
+  // Write your code here
+  return ""
+}
+
+  // Decodes your encoded data to tree.
+func Deserialize(data string) *Node {
+  // Write your code here
+    return new(Node)
+}

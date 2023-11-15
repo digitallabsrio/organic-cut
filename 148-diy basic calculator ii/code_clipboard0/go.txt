@@ -1,0 +1,15 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+func calculate(st string) int {
+  
+  var result int = 0
+
+  //Your code goes here
+
+  return result
+}

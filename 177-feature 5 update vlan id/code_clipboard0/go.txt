@@ -1,0 +1,42 @@
+package main
+import (
+    "fmt"
+)
+
+func dfs(matrix *[][]int, r int, c int, currID int, newID int) {
+    // Check bounds of the matrix
+    // check if ID has already been changed 
+    if (r < 0 || c < 0 || r >= len((*matrix)) || c >= len((*matrix)[0]) || 
+        (*matrix)[r][c] != currID) {
+        return
+    }
+    // Assign new ID
+    (*matrix)[r][c] = newID
+    
+    // Up 
+    dfs(matrix, r-1, c, currID, newID)
+    // Down
+    dfs(matrix, r+1, c, currID, newID)
+    // Left
+    dfs(matrix, r, c-1, currID, newID)
+    // Right
+    dfs(matrix, r, c+1, currID, newID)
+}
+
+func updateVLAN(matrix [][]int, r int, c int, newID int) [][]int{
+    
+    currID := matrix[r][c]
+    if currID == newID {
+        return matrix
+    }
+    dfs(&matrix, r, c, currID, newID)
+    return matrix
+}
+
+
+func main() {
+    // Driver code
+    matrix := [][]int{{1,1,1,1,1}, {1,1,1,1,0}, {1,1,1,0,0}, {1,1,0,1,0}, {1,1,0,0,1}}
+    r, c, newID := 1, 1, 2
+    print(updateVLAN(matrix, r, c, newID))
+}

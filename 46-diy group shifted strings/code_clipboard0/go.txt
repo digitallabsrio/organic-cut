@@ -1,0 +1,11 @@
+package main
+import (
+  "fmt"
+  "sort"
+  "encoding/json"
+)
+
+func groupStrings(strs []string) [][]string{
+    // write your code here
+    return [][]string{}
+}

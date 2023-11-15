@@ -1,0 +1,12 @@
+package main
+import (
+  "fmt"
+  "sort"
+  "reflect"
+  "encoding/json"
+)
+
+func accountsMerge(accounts [][]string) [][]string{
+    // write your code here
+    return [][]string{}
+}

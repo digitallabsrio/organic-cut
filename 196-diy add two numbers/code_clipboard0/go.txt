@@ -1,0 +1,20 @@
+package main
+
+type LinkedListNode struct {
+    value int
+    next *LinkedListNode
+}
+
+func NewNode (value int) *LinkedListNode {
+    node := new(LinkedListNode)
+    node.value = value
+    node.next = nil
+    return node
+}
+
+func NewNode1 (value int, next *LinkedListNode) *LinkedListNode {
+    node := new(LinkedListNode)
+    node.value = value
+    node.next = next
+    return node
+}

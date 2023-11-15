@@ -1,0 +1,12 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+  "sort"
+  "reflect"
+)
+
+func insertInterval(intervals [][]int, newInterval []int) [][]int{
+    // Write your code here  
+    return [][]int{}  
+}

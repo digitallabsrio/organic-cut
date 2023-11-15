@@ -1,0 +1,16 @@
+package main
+import(
+    "fmt"
+    "encoding/json"
+    "sort"
+    "strings"
+)
+
+func letterCombinations(digits string) []string {
+
+   var combinations []string
+
+   // Your code goes here
+
+    return combinations
+}

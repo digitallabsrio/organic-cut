@@ -1,0 +1,6 @@
+object Solution {
+  def multiply(first:String, second:String): String = {
+    // write your code here
+    "0"
+  }
+}

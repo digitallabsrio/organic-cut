@@ -1,0 +1,25 @@
+package main
+import "fmt"
+
+func determineLocation(region [][]int, lossValue int) []int{
+    row := len(region) - 1
+    col := 0
+
+    for row >= 0 && col < len(region[0]) {
+        if region[row][col] > lossValue {
+            row--
+        } else if (region[row][col] < lossValue) {
+            col++
+        } else {
+            return []int {row, col}
+        }
+    }
+    return []int {-1, -1}
+}
+
+func main() {
+    // Driver code
+    region := [][]int{{1,4,7,11,15},{2,5,8,12,19},{3,6,9,16,22},{10,13,14,17,24},{18,21,23,26,30}};
+    lossValue := 5
+    print(determineLocation(region, lossValue))
+}

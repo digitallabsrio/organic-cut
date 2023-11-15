@@ -1,0 +1,37 @@
+package main
+import (
+  "fmt"
+)
+
+func peakSignalStrength(nums []int) int {
+  l := 0; r := len(nums) - 1
+  for l < r {
+    mid := (l + r) / 2
+    if nums[mid] > nums[mid + 1]{
+      r = mid
+    } else {
+      l = mid + 1
+    }
+  }
+  return l
+}
+
+// Driver code
+func main() {
+
+  // Example - 1
+  nums := []int{1, 2, 3, 4, 5}
+  fmt.Println(peakSignalStrength(nums))
+
+  // Example - 2
+  nums = []int{5, 4, 3, 2, 1}
+  fmt.Println(peakSignalStrength(nums))
+
+  // Example - 3
+  nums = []int{2, 3, 4, 5, 1}
+  fmt.Println(peakSignalStrength(nums))
+
+  // Example - 4: Multiple Peaks
+  nums = []int{1, 2, 4, 3, 6, 5, 10, 19, 8, 17}
+  fmt.Println(peakSignalStrength(nums))
+}

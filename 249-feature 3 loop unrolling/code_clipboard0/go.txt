@@ -1,0 +1,41 @@
+package main
+import "fmt"
+
+func loopUnrolling(codeBlock string) string {
+    var countStack Stack
+    var statementStack StringStack
+    currentStatement := ""
+    
+    n := 0
+    for i := 0; i < len(codeBlock); i++ {
+        ch := codeBlock[i]
+        if '0' <= ch && ch <= '9' {
+            n = n * 10 + int(ch - '0')
+        } else if ch == '[' {
+            // push the number n to countStack
+            countStack = countStack.Push(n);
+            statementStack = statementStack.Push(currentStatement)
+            // reset currentStatement and n
+            currentStatement = ""
+            n = 0
+        } else if ch == ']' {
+            unrollStatement := statementStack.Top()
+            statementStack, _ = statementStack.Pop()
+            // unroll currentN[currentStatement] by appending currentStatement n times
+            currentN := countStack.Top()
+            countStack, _ = countStack.Pop()
+            for ;currentN > 0; currentN-- {
+                unrollStatement += currentStatement
+            }
+            currentStatement = unrollStatement
+        } else {
+            currentStatement += string(ch)
+        }
+    }
+    return currentStatement
+}
+
+func main() {
+    codeBlock := "2[sum = sum + i; 2[i++; ]]";
+    fmt.Println(loopUnrolling(codeBlock))
+}

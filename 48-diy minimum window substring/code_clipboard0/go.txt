@@ -1,0 +1,12 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+  "reflect"
+)
+
+
+func MinWindow(ListA string, ListB string) string{
+  // Write your code here
+  return "-1"
+}

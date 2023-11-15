@@ -1,0 +1,33 @@
+package main
+import (
+  "fmt"
+  "math"
+  "encoding/json"
+  "strconv"
+)
+
+type MinStack struct {
+    maxSize int
+}
+
+func newMinStack(maxSize int) *MinStack {
+    // Initialize your data structures here
+    return &MinStack{maxSize: maxSize}
+}
+
+//removes and returns value from stack
+func (m *MinStack) Pop() int{
+    // write your code here
+    return math.MinInt64
+}
+
+//Pushes value into the stack
+func (m *MinStack) Push(value int){
+    // write your code here 
+}
+
+//returns maximum value in O(1)
+func (m *MinStack) Min() int{
+      // write your code here 
+    return math.MinInt64
+}

@@ -1,0 +1,11 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+func HasPath(maze [][]int, start []int, end []int) bool {
+  //Write your code here
+  return true
+}

@@ -1,0 +1,31 @@
+package main
+import (
+    "fmt"
+    "math"
+)
+
+func minimumHops(values []int) int {
+    
+    if len(values) < 2{
+        return 0
+    } 
+    maxReach := values[0]
+    currReach := values[0]
+    
+    hops := 1
+    for i := 1; i < len(values); i++ {
+        // Another jump needed if reach this clause
+        if currReach < i {
+            hops++
+            currReach = maxReach
+        }
+        maxReach = int(math.Max(float64(maxReach), float64(values[i] + i)))
+    }
+    return hops
+}
+
+func main() {
+    // Driver code
+    switchArray := []int{4, 1, 1, 3, 1, 1, 1}
+    fmt.Println("Minimum hops to final router are:", minimumHops(switchArray))
+}

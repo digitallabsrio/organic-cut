@@ -1,0 +1,10 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json" 
+)
+
+func isDivisionPossible(nums []int, k int) bool {
+    return false
+}

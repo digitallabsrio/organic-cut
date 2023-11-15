@@ -1,0 +1,11 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+func regex(s string, p string) bool {
+  // Your code goes here
+  return false
+}

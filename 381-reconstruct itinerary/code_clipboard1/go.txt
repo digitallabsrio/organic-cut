@@ -1,0 +1,47 @@
+package main
+import (
+    "fmt"
+    "sort"
+)
+
+func detectItinerary(tickets [][]string) []string{
+    Map := make(map[string][]string)
+    for i := 0; i < len(tickets); i++ {
+        dep, des := tickets[i][0], tickets[i][1]
+        if _, ok := Map[dep]; ok {
+            Map[dep] = append(Map[dep], des)
+        } else {
+            Map[dep] = make([]string, 1)
+            Map[dep][0] = des
+        }
+    }
+    for loc, _ := range Map {
+        sort.Strings(Map[loc])
+        Map[loc] = Reverse(Map[loc])   
+    }  
+    result := make([]string, 0)
+    var dfs func(string)
+    dfs = func (node string) {
+        des, _ := Map[node]
+        for len(des) > 0 {
+            temp := des[len(des) - 1]
+            des = des[: len(des) - 1]
+            dfs(temp)
+        }
+        result = append(result, node); 
+    }
+    dfs("JFK")
+    return Reverse(result)
+}
+
+func Reverse(s []string) []string{
+    for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
+        s[i], s[j] = s[j], s[i]
+    }
+    return s
+}
+
+func main(){
+    input := [][]string{{"JFK","ATI"},{"ATI","LHR"},{"SAC","SJF"},{"LHR","SAC"}}
+    fmt.Print(detectItinerary(input))
+}

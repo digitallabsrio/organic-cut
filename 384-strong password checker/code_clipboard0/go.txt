@@ -1,0 +1,11 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+func strongPasswordChecker(password string) int {
+  // Write your code here
+  return -1
+}

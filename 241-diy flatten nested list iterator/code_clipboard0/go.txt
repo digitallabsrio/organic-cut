@@ -1,0 +1,25 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+type NestedIterator struct {
+  // Write your code here
+}
+ 
+func Constructor(nestedList []*NestedIntegers) *NestedIterator {
+    // Write your code here
+    return new(NestedIterator)
+}
+
+func (this *NestedIterator) HasNext() bool {
+    // Write your code here
+    return false
+}
+
+func (this *NestedIterator) Next() int {
+    // Write your code here     
+    return -1
+}

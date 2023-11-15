@@ -1,0 +1,10 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+)
+
+func exclusiveTime(n int, logs []string) []int {
+    // Write your code here
+    return []int{}
+}

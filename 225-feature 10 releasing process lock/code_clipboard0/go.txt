@@ -1,0 +1,29 @@
+package main
+import (
+  "fmt"
+)
+
+func FindUnreleasedLock(process []int) int{
+    lo := 0
+    hi := len(process) - 1
+    for lo < hi {
+      // Calculating mid point
+      mid := lo + (hi - lo) / 2;
+      if mid % 2 == 1 { mid-- }
+      // If the element at mid and mid+1 are the same then
+      // the unreleased lock must be after the mid point
+      if process[mid] == process[mid + 1] {
+        lo = mid + 2
+      } else {
+      // Otherwise we must search before the mid point
+        hi = mid
+      }
+    }
+    return process[lo]
+}
+
+func main(){
+    // Driver code
+    arr := []int{1,1,2,2,3,3,4,4,5,8,8}
+    fmt.Print(FindUnreleasedLock(arr))
+}

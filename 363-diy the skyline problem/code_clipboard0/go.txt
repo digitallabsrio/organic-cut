@@ -1,0 +1,12 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+  "reflect"
+)
+
+func DrawSkyline(buildings [][]int) [][]int {
+  // Your code goes here
+  return buildings
+}

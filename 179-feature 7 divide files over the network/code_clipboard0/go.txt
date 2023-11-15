@@ -1,0 +1,34 @@
+package main
+import (
+    "fmt"
+    "strconv"
+    "math"
+)
+
+func partitionLabels(files string) int{
+    // Compute the last occurences of each letter
+    last := make([]int, 26)
+    for i := 0; i < len(files); i++{
+        last[files[i] - 'a'] = i
+    }
+    
+    end, count := 0, 0
+
+    // Traverse the string
+    for i := 0; i < len(files); i++ {
+        // Compute the highest last occurence position
+        end = int(math.Max(float64(end), float64(last[files[i] - 'a'])))
+        
+        // Clause for when we reach the highest last occurence position
+        if i == end {
+            count++
+        }
+    }
+    return count
+}
+
+func main() {
+    // Driver code
+    files := "abacdc"
+    fmt.Println("The files \"" + files + "\" will be divided into " + strconv.Itoa(partitionLabels(files)) + " worker nodes!")
+}

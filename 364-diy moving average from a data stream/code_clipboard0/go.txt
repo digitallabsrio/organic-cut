@@ -1,0 +1,20 @@
+package main
+import "fmt"
+import "strconv"
+import "encoding/json"
+
+type MovingAverage struct {
+    // Your code goes here
+}
+
+
+func Constructor(size int) *MovingAverage {
+    // Your code goes here
+    return new(MovingAverage)
+}
+
+
+func (this *MovingAverage) FindMovingAverage(val int) float64 {
+    // Your code goes here
+    return 0.0   
+}

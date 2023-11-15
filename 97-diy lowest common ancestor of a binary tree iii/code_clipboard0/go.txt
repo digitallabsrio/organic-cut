@@ -1,0 +1,20 @@
+package main
+import (
+    "fmt"
+    "strconv"
+    "encoding/json"
+    "math"
+    "strings"
+)
+
+type Node struct {
+    data int
+    left *Node
+    right *Node
+    parent *Node
+}
+
+func lowestCommonAncestor(p, q *Node) *Node{
+    // write your code here
+    return nil;
+}

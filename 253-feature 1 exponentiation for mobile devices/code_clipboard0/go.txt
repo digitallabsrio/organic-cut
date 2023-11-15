@@ -1,0 +1,36 @@
+package main
+import (
+  "fmt"
+  "math"
+)
+
+func pow(base float64, power int) float64 {
+  var quickPow func (float64, int) float64
+  quickPow = func(base float64, power int) float64 {
+    if power == 0 {
+      return 1.0
+    }
+      
+    half := QuickPow(base, int(math.Floor(float64(power / 2))));
+    if power % 2 == 0 {
+      return half * half
+    }
+      
+    return half * half * base
+  }
+
+  if (power < 0) {
+    base = 1 / base
+    power = -power
+  }
+  return quickPow(base, power)
+}
+
+func main(){
+  Base := float64(2)
+	Power := 4
+
+	result := Pow(Base, Power)
+
+	fmt.Println(result)
+}

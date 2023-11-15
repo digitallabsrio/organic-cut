@@ -1,0 +1,12 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+  "sort"
+  "reflect"
+)
+
+func intervalsIntersection(intervalsA, intervalsB [][]int) [][]int{
+    //Write your code here
+    return [][]int{}
+}

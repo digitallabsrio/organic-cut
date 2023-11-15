@@ -1,0 +1,12 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+  "reflect"
+)
+
+func autoRotate(matrix [][]int) [][]int{    
+  // Write your code here
+  return matrix
+}

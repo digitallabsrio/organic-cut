@@ -1,0 +1,10 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+)
+
+func findAllConcatenatedWords(words []string) []string {
+    // write your code here
+    return []string{}
+}

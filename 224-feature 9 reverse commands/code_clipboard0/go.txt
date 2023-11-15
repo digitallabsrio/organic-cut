@@ -1,0 +1,28 @@
+package main
+import (
+  "fmt"
+  "strings"
+)
+
+func ReverseWords(s string) string{
+    
+  // Remove leading and trailing spaces
+  s = strings.TrimSpace(s)
+  
+  // Split the string by multiple spaces
+  wordList := strings.Split(strings.Join(strings.Fields(s), " "), " ")
+  
+  // Reverse the wordList
+  w := Reverse(wordList)
+  
+  return strings.Join(w, " ");
+}
+func Reverse(s []string) []string{
+    for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
+        s[i], s[j] = s[j], s[i]
+    }
+    return s
+}
+func main(){
+    fmt.Println(ReverseWords(" *.html pages.tar.gz czvf tar "));
+}

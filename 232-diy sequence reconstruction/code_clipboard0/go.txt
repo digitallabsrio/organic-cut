@@ -1,0 +1,10 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+)
+
+func sequenceReconstruction(org []int, seqs [][]int) bool {
+    // write your code here
+    return false
+}

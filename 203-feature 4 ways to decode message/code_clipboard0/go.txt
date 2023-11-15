@@ -1,0 +1,49 @@
+package main
+import (
+  "fmt"
+  "strconv"
+)
+
+var memo []int
+
+func numPlainText(c string) int {
+  memo = make([]int, len(c) + 1)
+  for i := 0; i < len(memo); i++{
+    memo[i] = -1
+  }
+  return memoization(0, c)
+}
+
+func memoization(index int, c string) int{
+  if memo[index] != -1 {
+    return memo[index]
+  }
+  // If we reach the end of the ciphertext, we return 1.
+  if index == len(c) {
+    return 1
+  }
+  // If the ciphertext starts with a zero, it can't be deciphered
+  if c[index] == '0' {
+    return 0
+  }
+  if index == len(c) - 1 {
+    return 1
+  }
+  // make a recursive call to the function with index + 1 for next substring
+  result := memoization(index + 1, c)
+  // make a recursive call to the function with index + 2 after checking for
+  // valid two-digit decipher
+  if num, _ := strconv.Atoi(c[index : index + 2]); num <= 26 {
+    result += memoization(index + 2, c)
+  }
+  // save the result to be used later, in case of overlapping subproblems.
+  memo[index] = result
+  return result;
+}
+
+func main() {
+  // Driver code
+  c := "2317"
+  num := numPlainText(c)
+  fmt.Println("Number of possible plain text:", num)
+}

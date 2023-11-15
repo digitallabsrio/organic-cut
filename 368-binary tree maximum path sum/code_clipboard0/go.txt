@@ -1,0 +1,17 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+type TreeNode struct{
+    val int
+    left *TreeNode
+    right *TreeNode
+}
+
+func maxPathSum(root *TreeNode) int {
+    // write your code here
+    return -1;
+}

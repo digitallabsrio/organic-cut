@@ -1,0 +1,41 @@
+package main
+import (
+  "fmt"
+  "strconv"
+)
+
+func idleTime(list1 *LinkedListNode, list2 * LinkedListNode) *LinkedListNode{
+    dummy := NewNode(0)
+    p := list1
+    q := list2;
+    curr := dummy;
+    carry := 0;
+    for p != nil || q != nil {
+        x, y := 0, 0
+        if p != nil { x = p.value } else { x = 0 }
+        if q != nil { y = q.value } else { y = 0 }
+        sum := carry + x + y
+        carry = sum / 10
+        curr.next = NewNode(sum % 10)
+        curr = curr.next
+        if p != nil { p = p.next }
+        if q != nil { q = q.next }
+    }
+    if carry > 0 {
+        curr.next = NewNode(carry);
+    }
+    return dummy.next
+}
+
+func main() {
+    // driver code
+    list1 := NewNode(9)
+    list1.next = NewNode(9)
+    list1.next.next = NewNode(9)
+
+    list2 := NewNode(9)
+    list2.next = NewNode(9)
+    list2.next.next = NewNode(9)
+    dummy := idleTime(list1, list2)
+    print(dummy)
+}

@@ -1,0 +1,18 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+type Node struct {
+
+    val int
+    next *Node
+    random *Node
+}
+
+func copyRandomList(head *Node) *Node{
+    // write your code here
+    return nil
+}

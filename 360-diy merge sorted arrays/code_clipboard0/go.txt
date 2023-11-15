@@ -1,0 +1,10 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+)
+
+func mergeSorted(nums1 []int, m int, nums2 []int, n int) []int {
+    // write your code here
+    return nums1
+}

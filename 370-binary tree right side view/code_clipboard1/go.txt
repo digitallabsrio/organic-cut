@@ -1,0 +1,52 @@
+package main
+import (
+  "fmt"
+  "strconv"
+)
+
+type TreeNode struct{
+    val int
+    left *TreeNode
+    right *TreeNode
+}
+
+func DFS(node *TreeNode, level int, rightside *[]int) {
+    if level == len((*rightside)) {
+        (*rightside) = append((*rightside), node.val)
+
+    }
+    
+    if node.right != nil {
+        DFS(node.right, level + 1, rightside);
+    }
+    if (node.left != nil) {
+        DFS(node.left, level + 1, rightside)
+    }
+}    
+    
+func rightSideView(root *TreeNode) []int {
+    var rightside []int
+    if root == nil {
+        return rightside
+    }
+    
+    DFS(root, 0, &rightside)
+    
+    return rightside
+}
+
+func main() {
+    // Driver code
+
+    root := &TreeNode{val: 1}
+    root.left = &TreeNode{val: 2}
+    root.right = &TreeNode{val: 3}
+    root.left.left = &TreeNode{val: 4}
+    root.left.right = &TreeNode{val: 5}
+
+    root.right.left = &TreeNode{val: 6}
+    root.right.right = &TreeNode{val: 7}
+    root.right.right.left = &TreeNode{val: 8}
+
+    print(rightSideView(root))
+}

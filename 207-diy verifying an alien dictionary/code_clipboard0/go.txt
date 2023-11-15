@@ -1,0 +1,12 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+  "strings"
+)
+
+func verifyAlienDictionary(words []string, order string) bool {
+  // Write your code goes here
+  return false
+}

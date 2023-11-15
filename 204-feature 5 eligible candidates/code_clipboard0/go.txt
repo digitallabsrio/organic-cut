@@ -1,0 +1,75 @@
+package main
+import (
+  "fmt"
+  "math"
+  "strconv"
+)
+
+func FindServers(Servers []int, k int, num int) []int {
+  Machines := make([]int, 0)
+    
+  // If the number of Servers is same as k,
+  // return the original Servers array
+  if len(Servers) == k {
+    for i := 0; i < k; i++ {
+      Machines = append(Machines, Servers[i])
+    }
+    return Machines
+  }
+  
+  // Do a binary search to find the element closest to num
+  left := 0
+  right := len(Servers)
+  mid := 0
+  for left < right {
+    mid = (left + right) / 2
+    if Servers[mid] >= num {
+      right = mid
+    } else {
+      left = mid + 1
+    }
+  }
+    
+  // Initialize the pointers for the sliding window
+  left -= 1
+  right = left + 1
+    
+  // While the sliding window's size is less than k
+  for (right - left - 1 < k) {
+    // check for out of bounds
+    if left == -1 {
+      right += 1;
+      continue;
+    }
+      
+    // Expand the window towards the side with the closer number
+    // Be careful to not go out of bounds with the pointers
+    // |a - x| < |b - x|,
+    // |a - x| == |b - x|
+    if right == len(Servers) || math.Abs(float64(Servers[left] - num)) <= math.Abs(float64(Servers[right] - num)) {
+        left -= 1;
+    } else {
+        right += 1;
+    }
+  } 
+
+  // Build and return the window
+  for i := left + 1; i < right; i++ {
+      Machines = append(Machines, Servers[i])
+  }
+  return Machines;
+}
+
+func main() {
+  // Driver code
+  Servers := []int{1,2,3,4,5}
+  k := 4
+  num := 3
+  kMachines := FindServers(Servers, k, num);
+
+  fmt.Print("[")
+  for i := 0; i < k-1; i++ {
+    fmt.Print(strconv.Itoa(kMachines[i]) + ", ");
+  }
+  fmt.Print(strconv.Itoa(kMachines[k-1]) + "]");
+} 

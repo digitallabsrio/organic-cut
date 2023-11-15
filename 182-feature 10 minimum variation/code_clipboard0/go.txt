@@ -1,0 +1,57 @@
+package main
+import (
+    "fmt"
+    "math"
+)
+
+func NewDeque() *Deque { 
+    return &Deque{} 
+}
+
+func miniVariationLength(nums []int, threshold int) int {
+    
+    maxDeque := NewDeque()
+    minDeque := NewDeque()
+    start, end, ans := 0, 0, 0
+
+    for end < len(nums) {
+        // All elements greater than current index element gets removed from minDeque
+        for !minDeque.Empty() && nums[end] < nums[minDeque.Back()]{
+            minDeque.PopBack(); // pop from end
+        }
+        
+        // All elements smaller than current index element gets removed from minDeque
+        for !maxDeque.Empty() && nums[end] > nums[maxDeque.Front()] {
+            maxDeque.PopBack() // pop from end
+        }
+        
+        // append at end of both deques
+        minDeque.PushBack(end)
+        maxDeque.PushBack(end)
+
+        variation := nums[maxDeque.Front()] - nums[minDeque.Front()]
+        if variation > threshold{
+            start++
+            // A new sub-array is starting so elements from previous one should
+            // be removed from both the deques
+            if start > minDeque.Front(){
+                minDeque.PopFront() // pop from front
+            }
+            if start > maxDeque.Front() {
+                maxDeque.PopFront(); // pop from front
+            }
+        }
+        
+        ans = int(math.Max(float64(ans), float64(end - start + 1)))
+        end++
+    }
+    return ans
+}
+
+func main() {
+  // Driver Code
+    trafficRates := []int{10,1,2,4,7,2}
+    thresholdMiniVal := 5
+
+    fmt.Printf("The traffic of this customer changes by less than or equal to %d Gbps in a %d day window", thresholdMiniVal, miniVariationLength(trafficRates, thresholdMiniVal))
+}

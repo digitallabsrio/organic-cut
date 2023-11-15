@@ -1,0 +1,43 @@
+package main
+import "fmt"
+
+func removeComments(source []string) []string{
+    var output []string
+    buffer := ""
+    block := false
+    for _, line := range source {
+        i := 0
+        for i < len(line) {
+            c := line[i]
+            // "//" -> inline comment.
+            if c == '/' && (i + 1) < len(line) && line[i + 1] == '/' && !block {
+                i = len(line) // Advance pointer to end of current line.
+            } else if c == '/' && (i + 1) < len(line) && line[i + 1] == '*' && !block {
+                // "/*" -> start of block comment.
+                block = true
+                i++
+            } else if c == '*' && (i + 1) < len(line) && line[i + 1] == '/' && block {
+                // "*/" -> end of block comment.
+                block = false
+                i++
+            } else if(!block){
+              // normal character -> Append to buffer if not in block comment.
+                buffer += string(c)
+            }
+            i++
+        }
+        if buffer!= "" && !block {
+            output = append(output, buffer)
+            buffer = ""
+        }
+    }
+    return output
+}
+
+func main() {
+    source := []string{"/* Example code for feature */", "int main() {", "  /*", "  This is a", "  block comment", "  */", "  int value = 10;  // This is an inline comment", "  int sum = value + /* this is // also a block */ value;", "  return 0;", "}"}
+    for _, line := range removeComments(source) {
+        fmt.Printf("%#v\n", line)
+    }
+    
+}

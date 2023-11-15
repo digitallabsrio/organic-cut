@@ -1,0 +1,131 @@
+package main
+import (
+  "fmt"
+  "math"
+  "unicode"
+)
+
+func strongPasswordChecker(password string) int {
+  deleteChar := int(math.Max(float64(0), float64(len(password) - 20))) // the number of characters to delete
+  insertChar := int(math.Max(float64(0), float64(6 - len(password)))) // the number of characters to insert
+  toDelete, toAdd, toReplace := 0, 0, 0
+  upperChar, lowerChar, digitChar := 1, 1, 1
+  // for cases where password.length <= 20
+  for left, right := 0, 0; right < len(password); right++ {
+    ch := password[right]
+    // check if the password has uppercase or lowercase letters or digits
+    if unicode.IsUpper(rune(ch)) { 
+      upperChar = 0
+    }
+    if unicode.IsLower(rune(ch)) { 
+      lowerChar = 0
+    }
+    if unicode.IsDigit(rune(ch)) { 
+      digitChar = 0
+    }
+    // if there is a substring with 3 characters
+    if right - left == 2 {
+      // check if the substring has three repeating characters                
+      if password[left] == password[left + 1] && password[left + 1] == password[right] {     
+        // we will insert a character if required
+        if toAdd < insertChar { 
+          toAdd++;
+          left = right; 
+        } else { // otherwise we will replace a character to break the repetition
+          toReplace++; 
+          left = right + 1; 
+        }  // we will always keep the substring with 3 characters      
+      } else { 
+        left++;
+      }
+    }
+  }
+  // for the case where password.length <= 20, return the number of
+  // replacements to make the password strong
+  if len(password) <= 20 { 
+    return int(math.Max(float64(insertChar + toReplace), float64(upperChar + lowerChar + digitChar)))
+  }
+  // for cases where password.length > 20
+  toReplace = 0 // we will reset the number of replacements needed
+  // record repetitions with length % 3 is 0, 1 or 2
+  repCounts := make([]map[int]int, 0)
+  // initialize the vector
+  for i := 0; i < 3; i++{
+    repCounts = append(repCounts, make(map[int]int))
+  }
+  //we store all repetion frequencies in the password
+  for left, right := 0, 0; right <= len(password); right++ {
+    length := 0
+    if right == len(password) || password[left] != password[right] {
+      length = right - left
+      if (length > 2) {
+        // we only care about repetitions with length >= 3, and store 
+        // the number of deletions required for this substring
+        // increment the value in the hashmap, specific to the key
+        temp := repCounts[int(length % 3)]
+        
+        count, ok := temp[length]
+        if !ok  {
+          temp[length] = 1
+        } else{
+          temp[length] = count + 1
+        }
+        repCounts[length % 3] = temp
+        
+      }
+      left = right;
+    }
+  }
+  /*
+      We will delete characters to minimize replacements. We will follow the following pattern:
+      i) if len % 3 == 0, we will delete one character from repetitions, thereby decreasing replacements by 1
+      ii) if len % 3 == 1, we will delete two characters from repetitions, thereby decreasing replacements by 1 
+      iii) if len % 3 == 2, we will delete multiple characters from repetitions, thereby decreasing replacements by 1 
+  */
+  for i := 0; i < 3; i++ {
+    dec, numLetters := 0, 0
+    temp := repCounts[i]
+    for key, value := range temp {
+      if i < 2 {
+        numLetters = i + 1
+        // the number of repetitions we will delete from are dec
+        dec = int(math.Min(float64(value), float64((deleteChar - toDelete) / numLetters)))
+        toDelete += dec * numLetters
+        // update the number of repetitions left in the password
+        count := value - dec
+        temp[key] = count
+        value = count
+        repCounts[i] = temp
+        // after characters are deleted, it fits in the group where length % 3 == 2
+        if key - numLetters > 2 {
+          temp3 := repCounts[2]
+          k := key - numLetters;
+          count3, ok := temp3[k]
+          if !ok {
+            temp3[k] = dec
+          }else {
+            temp3[k] = count3 + dec
+          }
+          repCounts[2] = temp3
+        }
+      }
+      // next we will record number of replacements needed
+      // also, note that if len is the length of repetition, we need (len / 3) number of replacements
+      toReplace += value * (key / 3)
+    }
+  }
+  numRep := (deleteChar - toDelete) / 3
+  toReplace -= numRep
+  toDelete -= numRep * 3
+  return deleteChar + int(math.Max(float64(toReplace), float64(upperChar + lowerChar + digitChar)))
+}
+
+// Driver Code
+func main() {
+  inputs := []string{"abcdefghijklmnopqrstuvwxyz", "aaaaaaaaaaaaaaaaaaaaa", "aaaa", "aabcc!ccdd.A1","0123456789"}
+  for i := 0; i < len(inputs); i++ {
+    steps := strongPasswordChecker(inputs[i])
+    fmt.Println("Password = \"",inputs[i], "\"")
+    fmt.Println("Minimum steps required to make a password strong = ", steps, "\n")
+  }
+}

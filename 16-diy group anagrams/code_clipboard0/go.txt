@@ -1,0 +1,12 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+  "reflect"
+  "sort"
+)
+
+func groupAnagrams(strs []string) [][]string{
+    // write your code here
+    return [][]string{}
+}

@@ -1,0 +1,15 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+  "strings"
+  "reflect"
+  "math"
+)
+
+
+func FlattenBinaryTree (root *TreeNode) *TreeNode{
+  // Write your code here
+  return nil 
+}

@@ -1,0 +1,9 @@
+package main
+import "fmt"
+import "strconv"
+import "encoding/json"
+
+func minAreaRect(points [][]int) int {
+  // Write your code here
+  return -1
+}

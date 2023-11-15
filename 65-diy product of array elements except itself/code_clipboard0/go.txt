@@ -1,0 +1,10 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+)
+
+func findProduct(arr []int) []int {
+    // write your code here!
+    return []int{}
+}

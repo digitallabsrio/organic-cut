@@ -1,0 +1,11 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+func isValid(str string) bool{
+  // Your code goes here
+  return true
+}

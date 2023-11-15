@@ -1,0 +1,21 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+  "strconv"
+)
+
+type MyCalendar struct {
+    // declare the data structures here
+};
+
+
+func newMyCalendar() *MyCalendar {
+    // Initialize the data structures here
+    return &MyCalendar{}
+}
+
+
+func (c *MyCalendar) Book(start, end int) bool{
+    return false
+}

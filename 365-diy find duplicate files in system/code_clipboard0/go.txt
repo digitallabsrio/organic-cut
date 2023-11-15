@@ -1,0 +1,16 @@
+package main
+import (
+  "fmt"
+  "strings"
+  "encoding/json"
+  "reflect"
+  "sort"
+)
+
+func findDuplicate(paths []string) [][]string{
+  output := make([][]string, 0)
+  
+  // Write your code here
+
+  return output
+}

@@ -1,0 +1,27 @@
+package main
+import "fmt"
+
+func getMissingID(arr []int, left int, right int, newN int) int{ 
+    if left + 1 == right {
+        return arr[left] + newN
+    }
+
+    var middle int = (left + right) / 2
+
+    missingNums := (arr[middle] - arr[left]) - (middle - left)
+    if newN > missingNums{
+        return getMissingID(arr, middle, right, newN - missingNums)
+    } else {
+        return getMissingID(arr, left, middle, newN)
+    }
+} 
+
+func resumeProcess(arr []int, n int) int{
+    return getMissingID(arr, 0, len(arr), n)
+}
+
+func main() {
+    // Driver Code
+    processes := []int{5, 7, 9, 10, 13}
+    fmt.Println(resumeProcess(processes, 3))
+}

@@ -1,0 +1,20 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+type Logger struct{
+  // declare your data structure here
+}
+
+func newLogger() *Logger{
+    // Construct the data structures if needed
+    return &Logger{}
+}
+
+func (l *Logger) ShouldPrintMessage(timestamp int, request string) bool {
+    // write your code here
+    return false
+}

@@ -1,0 +1,13 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+  "strconv"
+)
+
+func validUtf8(data []int) bool {
+  
+  // Your code goes here
+
+  return false
+}

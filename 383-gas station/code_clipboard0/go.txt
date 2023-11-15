@@ -1,0 +1,11 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+func CanCompleteCircuit(Gas []int, Cost []int) int {
+  // Write your code here
+  return 0;
+}

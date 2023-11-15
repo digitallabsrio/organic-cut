@@ -1,0 +1,32 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+  "math"
+)
+
+type SnapshotArray struct {
+    // Write your code here
+}
+
+
+func newSnapshotArray(length int) *SnapshotArray {
+    // Write your code here
+    return &SnapshotArray{}
+}
+
+func (s *SnapshotArray) Set(idx int, val int)  {
+    // Write your code here
+}
+
+
+func (s *SnapshotArray) Snapshot() int {
+    // Write your code here
+    return -1
+}
+
+func (s *SnapshotArray) Get(idx int, snapshotId int) int {
+    // Write your code here
+    return math.MinInt64 // Return min value in case snapshotId and idx not found
+}

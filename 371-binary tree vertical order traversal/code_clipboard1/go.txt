@@ -1,0 +1,70 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "container/list"
+  "math"
+)
+
+type TreeNode struct{
+    val int
+    left *TreeNode
+    right *TreeNode
+}
+
+type Pair struct {
+    first *TreeNode
+    second int
+}
+
+func verticalOrder(root *TreeNode) [][]int{
+    var output [][]int
+    if root == nil {
+        return output
+    }
+
+    columnTable := make(map[int][]int)
+    // Map of node and its column offset
+    queue := list.New()
+    column := 0;
+    queue.PushBack(Pair{first: root, second: column})
+
+    minColumn, maxColumn := 0, 0
+
+    for queue.Len() != 0 {
+        temp := queue.Front()
+        queue.Remove(temp)
+        p := temp.Value.(Pair)
+        root = p.first
+        column = p.second
+
+        if root != nil {
+            columnTable[column] = append(columnTable[column], root.val)
+            minColumn = int(math.Min(float64(minColumn), float64(column)))
+            maxColumn = int(math.Max(float64(maxColumn), float64(column)))
+            queue.PushBack(Pair{first: root.left, second: column - 1})
+            queue.PushBack(Pair{first: root.right, second: column + 1})
+        }
+    }
+
+    for i := minColumn; i < maxColumn + 1; i++ {
+        output = append(output, columnTable[i])
+    }
+
+    return output
+}
+
+func main() {
+    // Driver code
+
+    root := &TreeNode{val: 7}
+
+    root.left = &TreeNode{val: 11}
+    root.right = &TreeNode{val: 6}
+    root.left.left = &TreeNode{val: 13}
+    root.left.right = &TreeNode{val: 8}
+    root.right.left = &TreeNode{val: 19}
+    root.right.right = &TreeNode{val: 5}
+
+    print(verticalOrder(root))
+}

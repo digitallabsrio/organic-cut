@@ -1,0 +1,19 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+)
+
+type SuggestionSystem struct{
+    // declare the data strctures here
+}
+
+func newSuggestionSystem(sentences []string, times []int) *SuggestionSystem {
+    // Initialize the data structures here
+    return &SuggestionSystem{}
+}
+
+
+func (s *SuggestionSystem) Input(c string) []string{
+    return []string{}
+}

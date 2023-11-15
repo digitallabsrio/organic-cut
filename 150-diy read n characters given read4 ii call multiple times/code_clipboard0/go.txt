@@ -1,0 +1,14 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+var solution = func(read4 func(*[]byte) int) func(*[]byte, int) int {
+    // Implement read method below
+    return func(buffer *[]byte, n int) int { 
+        // write your code here
+        return -1
+    }
+}

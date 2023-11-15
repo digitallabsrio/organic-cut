@@ -1,0 +1,23 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+  "strings"
+)
+
+type Node struct{
+    val int
+    leftChild *Node
+    rightChild *Node
+}
+
+func serializer(node *Node) string {
+    //write your code here
+    return "";
+}
+
+func deserializer(data string) *Node {
+    //write your code here
+    return nil
+}

@@ -1,0 +1,17 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+)
+
+type TreeNode struct{
+    val int
+    right *TreeNode
+    left *TreeNode
+    next *TreeNode
+}
+
+func traverse(root *TreeNode) *TreeNode{
+    // write your code here
+    return root
+}

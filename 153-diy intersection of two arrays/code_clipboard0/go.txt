@@ -1,0 +1,15 @@
+package main
+import (
+	"fmt"
+	"sort"
+	"strconv"
+	"encoding/json"
+)
+
+func intersection(nums1 , nums2 []int) []int {
+	result := make([]int, 0)
+	
+	// Your code goes here
+
+	return result
+}

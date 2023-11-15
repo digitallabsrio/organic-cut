@@ -1,0 +1,103 @@
+package main
+import (
+  "fmt"
+)
+
+type FileSystem struct{
+  root *TrieNode 
+  canFind bool
+}
+  /** Initialize your data structure here. */
+func NewFileSystem() *FileSystem {
+    f := new(FileSystem)
+    f.root = NewTrieNode()
+    f.canFind = false
+    return f
+}
+
+func (this *FileSystem) Add(word string) {
+  n := len(word)
+  curNode := this.root
+  for i := 0; i < n; i++ {
+    index := word[i] - 'a'
+    if curNode.nodes[index] == nil {
+      curNode.nodes[index] = NewTrieNode()
+    }
+    curNode = curNode.nodes[index]
+
+    if i == n - 1 {
+      if curNode.complete == true {
+        fmt.Println("Word already present")
+        return
+      }
+      curNode.complete = true
+    }
+  }
+}
+
+func (this *FileSystem) Search(word string) bool {
+    this.canFind = false
+    this.DFS(this.root, word, 0)
+    return this.canFind
+}
+
+func (this *FileSystem) GetAll() []string{
+    names := make([]string, 0)
+
+    if this.root == nil {
+      return []string{}
+    }
+
+    return DFS(this.root, "", names)
+}
+
+func DFS(r *TrieNode, w string, names []string) []string {
+    if r == nil { return names }
+    if r.complete {
+      names = append(names, w)
+    }
+    for j := 'a'; j <= 'z'; j++ {
+      n := w + string(j)
+      names = DFS(r.nodes[j - 'a'], n, names)
+    }
+    return names
+}
+
+func (this *FileSystem) DFS(root *TrieNode, word string, i int) {
+    if this.canFind { return }
+    if root == nil { return }
+    n := len(word)
+    if n == i {
+      if root.complete {
+        this.canFind = true
+      }
+      return
+    }
+    if word[i] == '.' {
+      for j := 'a'; j <= 'z'; j++ {
+        this.DFS(root.nodes[j - 'a'], word, i + 1)
+      }
+    } else {
+      index := word[i] - 'a'
+      this.DFS(root.nodes[index], word, i + 1)
+    }
+}
+
+func main() {
+    fmt.Println("Initializing object")
+    obj := NewFileSystem()
+    fmt.Println("Adding \"dir\" as a directory")
+    obj.Add("dir")
+    fmt.Println("Adding \"dir\" as a directory again")
+    obj.Add("dir")
+    fmt.Println("Adding \"dirr\" as a directory")
+    obj.Add("dirr")
+    fmt.Println("Adding \"file\" as a file")
+    obj.Add("file")
+    fmt.Println("Searching if \".ile\" exists")
+    fmt.Println(obj.Search(".ile"))
+    fmt.Println("Searching if \"..ile\" exists")
+    fmt.Println(obj.Search("..ile"))
+    fmt.Println("Getting all of the files\\directories:")
+    fmt.Println(obj.GetAll())
+  }

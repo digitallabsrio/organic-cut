@@ -1,0 +1,9 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+)
+func multiply(num1, num2 string) string {
+    // write your code here
+    return num1;
+}

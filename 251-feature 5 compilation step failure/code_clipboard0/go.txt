@@ -1,0 +1,26 @@
+package main
+
+import (
+	"fmt"
+)
+
+var V int = 28 // Failing step
+
+func firstFailingStep(n int) int{
+    first := 1
+    last := n
+    for first < last {
+        var mid int = first + (last - first) / 2
+        if IsFailingStep(mid) { // Calling the API to determine if the step fails
+            last = mid
+        } else {
+            first = mid + 1
+        }
+    }
+    return first
+}
+
+func main() {
+    n := 40 // Number of steps
+    fmt.Println(firstFailingStep(n))
+}

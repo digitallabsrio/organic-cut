@@ -1,0 +1,38 @@
+package main
+
+import (
+  "fmt"
+  "encoding/json"
+)
+
+type LRUCache struct{
+    capacity int
+    
+    //LinkedListNode holds key and value pairs
+    cache map[int]*LinkedListNode
+    cacheVals LinkedList
+}
+
+func newLRUCache(capacity int) *LRUCache{
+    // initialize your data structures here
+    return &LRUCache{capacity: capacity, cache: make(map[int]*LinkedListNode)}
+}
+
+func (lr *LRUCache) Get(key int) *LinkedListNode {
+    // Write your code here
+    return nil
+}
+
+func (lr *LRUCache) Set(key, value int) {
+    // Write your code here
+}
+
+func (lr *LRUCache) Print() string{
+    curr := lr.cacheVals.head
+    str := ""
+    for curr != nil {
+      str += fmt.Sprintf("(%v,%v)",  curr.key, curr.data)  
+      curr = curr.next
+    }
+    return str
+}

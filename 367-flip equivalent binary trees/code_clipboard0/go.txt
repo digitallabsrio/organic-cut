@@ -1,0 +1,17 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+type TreeNode struct{
+    val int
+    left *TreeNode
+    right *TreeNode
+}
+
+func flipEquiv(root1, root2 *TreeNode) bool{
+    // write your code here
+    return false
+}

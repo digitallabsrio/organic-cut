@@ -1,0 +1,16 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+  "strconv"
+)
+type TreeNode struct{
+    data int
+    left *TreeNode
+    right *TreeNode
+}
+
+func diameterOfBinaryTree(root *TreeNode) int{
+    // write your code here
+    return -1;
+}

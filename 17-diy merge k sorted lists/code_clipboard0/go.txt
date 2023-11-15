@@ -1,0 +1,11 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+  "reflect"
+)
+
+func mergeKLists(lists []*LinkedListNode) *LinkedListNode {    
+  // write your code here
+    return nil
+}

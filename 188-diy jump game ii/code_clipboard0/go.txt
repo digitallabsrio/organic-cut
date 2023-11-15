@@ -1,0 +1,11 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+func jump(nums []int) int {
+    // write your code here
+    return -1;
+}

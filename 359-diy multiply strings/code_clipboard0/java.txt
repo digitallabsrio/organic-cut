@@ -1,0 +1,7 @@
+class Solution {
+  public static String multiply(String num1, String num2) {
+    // Write code here
+      
+    return num1;
+  }
+}

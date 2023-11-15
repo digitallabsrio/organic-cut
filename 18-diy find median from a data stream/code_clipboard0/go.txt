@@ -1,0 +1,23 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+)
+
+type MedianOfAStream struct{
+  // declare your data structures here
+}
+
+func newMedianOfAStream() *MedianOfAStream {
+    // Initialize your data structures here
+    return &MedianOfAStream{}
+}
+
+func (m *MedianOfAStream) InsertNum(num int) {
+    // write your code here
+}
+
+func (m *MedianOfAStream) FindMedian() float64{
+    // write your code here
+    return -1;
+}

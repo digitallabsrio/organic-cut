@@ -1,0 +1,30 @@
+package main
+import (
+  "fmt"
+) 
+
+func ValidSequence(priorities []int) bool{
+    HashMap := make(map[int]Set)
+
+    for i := 0; i < len(priorities); i++ {
+      HashMap[priorities[i]] = NewSet()
+    }
+
+    HashMap[0].Add(0)
+    for i := 0; i < len(priorities); i++ {
+      for k, _ := range HashMap[priorities[i]].Get() {
+        for increment := k - 1; increment <= k + 1; increment++ {
+          _, ok := HashMap[priorities[i] + increment]
+          if increment > 0 && ok {
+            HashMap[priorities[i] + increment].Add(increment);
+          }
+        }
+      }
+    }
+    return HashMap[priorities[len(priorities) - 1]].Size() > 0
+}
+
+func main() {
+    input := []int{0,1,3,5,8,12,17}
+    fmt.Println(ValidSequence(input))
+}

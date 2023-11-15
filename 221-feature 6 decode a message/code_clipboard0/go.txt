@@ -1,0 +1,105 @@
+package main
+import (
+  "fmt"
+  "math"
+  "strconv"
+)
+
+func Decode(nums []int, target int) ([]string, bool) {
+    process := make([]string, 0)
+    var Dfs func([]float64, int) bool
+    var DecodeMessage func([]int, int) bool
+
+    DecodeMessage = func(nums []int, target int) bool{
+        if len(nums) == 0{
+            return false
+        }
+        x := make([]float64, 0)
+        for _, i := range nums{
+          x = append(x, float64(i))
+        }
+        return Dfs(x, target)
+    }
+
+    Dfs = func(nums []float64, target int) bool{
+        if len (nums) == 1{
+            return math.Abs(nums[0] - float64(target)) <= 0.001
+        }
+
+        for i := 0; i < len(nums); i++{  
+            for j := 0; j < len(nums); j++{  
+                if i == j{ continue }
+                nextNums := make([]float64, 0)
+                for k := 0; k < len(nums); k++{ 
+                    if k == j || k == i { continue }  
+                    nextNums = append(nextNums, nums[k])
+                }
+                num1 := nums[i]
+                num2 := nums[j]  
+                if i < j{
+                    nextNums = append(nextNums, num1 + num2)
+                    process = append(process,  strconv.Itoa(int(num1)) + "+" + strconv.Itoa(int(num2))+ "=" + strconv.Itoa(int(num1+num2)))
+                    if Dfs(nextNums, target){
+                        return true 
+                    }
+                    // Back track                    
+                    nextNums = nextNums[: len(nextNums) - 1]
+                    process = process[: len(process) - 1]
+                    
+                    nextNums = append(nextNums, num1 * num2) 
+                    process = append(process,  strconv.Itoa(int(num1))+ "*" +strconv.Itoa(int(num2))+ "=" + strconv.Itoa(int(num1*num2)))    
+                    if Dfs(nextNums, target){
+                        return true
+                    }
+                    // Back track                    
+                    nextNums = nextNums[: len(nextNums) - 1]
+                    process = process[: len(process) - 1]
+                }
+                nextNums = append(nextNums, num1 - num2) 
+                process = append(process,  strconv.Itoa(int(num1))+ "-" +strconv.Itoa(int(num2))+ "=" + strconv.Itoa(int(num1-num2)))
+                if Dfs(nextNums, target){
+                    return true 
+                }
+                // Back track                    
+                nextNums = nextNums[: len(nextNums) - 1]
+                process = process[: len(process) - 1]
+
+                if num2 == 0{
+                    nextNums = append(nextNums, float64(math.MaxInt64))
+                    process = append(process,  strconv.Itoa(int(num1))+ "/" +strconv.Itoa(int(num2))+ "=" + strconv.Itoa(int(math.MaxInt64)))                   
+                } else{ 
+                    nextNums = append(nextNums, num1 / num2)                     
+                    process = append(process,  strconv.Itoa(int(num1))+ "/" +strconv.Itoa(int(num2))+ "=" + strconv.Itoa(int(num1/num2)))                  
+                }
+                if Dfs(nextNums, target){
+                    return true 
+                }
+                // Back track                    
+                nextNums = nextNums[: len(nextNums) - 1]
+                process = process[: len(process) - 1]
+            }
+        }
+        return false
+    }
+    output := DecodeMessage(nums, target)
+    return process, output
+}
+
+func ShowSteps(process []string){
+      fmt.Println("Here are the steps: ") 
+      fmt.Println(process[0]) 
+      fmt.Println(process[1]) 
+      fmt.Println(process[2]) 
+}
+    
+func main(){
+    // Driver Code
+    message := []int{1,5,5,8}
+    mdigest := 30
+    process, output := Decode(message, mdigest)
+    fmt.Println(output)
+    if len(process) > 0{
+        ShowSteps(process)
+    }  
+}
+ 

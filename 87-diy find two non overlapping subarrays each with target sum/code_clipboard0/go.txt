@@ -1,0 +1,11 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+func minSumLength(arr []int, target int) int {
+    // write your code here
+    return 0;
+}

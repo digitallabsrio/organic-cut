@@ -1,0 +1,21 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+type NumMatrix struct{
+  // Your code goes here
+}
+
+func Constructor(matrix [][]int) NumMatrix{
+  numMatrix := NumMatrix{}
+  // Your code goes here
+  return numMatrix
+}
+
+func (this NumMatrix) SumRegion(row1, col1, row2, col2 int) int{
+  // Your code goes here
+  return -1
+}

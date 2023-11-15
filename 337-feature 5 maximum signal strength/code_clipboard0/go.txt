@@ -1,0 +1,32 @@
+package main
+import (
+  "fmt"
+)
+
+func MaxSignalStrength(Stores []int, k int) int{
+  Left, Right := 0, 0
+  n := len(Stores)
+  for Right = 0; Right < n; Right++{
+    // If we included a zero in the window we reduce the value of k.
+    // Since k is the maximum zeros allowed in a window.
+    if Stores[Right] == 0{
+      k--
+    }
+    // A negative k denotes we have consumed all the available repeaters and window has
+    // more than allowed zeros, thus increment left pointer by 1 to keep the window size same.
+    if k < 0{
+      k += 1 - Stores[Left]
+      Left++
+    }
+  }
+  return Right - Left
+}
+
+func main(){
+  Stores := []int{1, 0, 0, 1, 1, 1, 0, 1, 0, 1}
+  k := 1
+  fmt.Println("Maximum Contiguous Stores: ",MaxSignalStrength(Stores, k))
+
+  k = 3
+  fmt.Println("Maximum Contiguous Stores: ",MaxSignalStrength(Stores, k))
+}

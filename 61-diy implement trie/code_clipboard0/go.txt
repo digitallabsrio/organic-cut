@@ -1,0 +1,28 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+)
+
+type Trie struct {
+  // declare the data structures here
+}
+
+func newTrie() *Trie {
+    // initialize the data structures here
+    return &Trie{}
+}
+
+func (t *Trie) Insert(str string) {
+    // write your code here
+}
+
+func (t *Trie) Search(str string) bool {
+    // write your code here
+    return false
+}
+
+func (t *Trie) SearchPrefix(str string) bool {
+    // write your code here
+    return false
+}

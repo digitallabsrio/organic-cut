@@ -1,0 +1,12 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+  "reflect"
+)
+
+func MinRemoveParentheses(n string) string {
+  result := ""
+  // Your code goes here
+  return result
+}

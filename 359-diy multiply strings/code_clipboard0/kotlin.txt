@@ -1,0 +1,6 @@
+internal object Solution {
+  fun multiply(num1: String,num2:String) : String {
+    println(num2)
+    return num1;
+  }
+}

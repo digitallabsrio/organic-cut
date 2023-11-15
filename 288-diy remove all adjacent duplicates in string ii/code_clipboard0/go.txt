@@ -1,0 +1,12 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+  "reflect"
+)
+
+func RemoveDuplicates(str string, k int) string {
+    // Write your code here
+    return str
+}

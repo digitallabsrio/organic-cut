@@ -1,0 +1,6 @@
+import Swift
+
+func multiply(firstNumber: String, secondNumber: String) -> String {
+    // Write your code here  
+    return ""
+}

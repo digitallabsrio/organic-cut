@@ -1,0 +1,45 @@
+package main
+import (
+  "fmt"
+)
+
+func verifyMessageIntegrity(messages []string, key string) bool{
+  if len(messages) == 1 {
+    return true
+  }
+  keyMap := make(map[byte]int)
+
+  for i := 0; i < len(key); i++ {
+    keyMap[key[i]] = i
+  } 
+
+  for i := 0; i < len(messages) - 1; i++ {
+    for j := 0; j < len(messages[i]); j++ {
+      // If we do not find a mismatch letter between messages[i] and messages[i + 1],
+      // we need to examine the case when messages are like ("educated", "educate").
+      if j >= len(messages[i + 1]) { return false }
+      if messages[i][j] != messages[i + 1][j] {
+        if keyMap[messages[i][j]] > keyMap[messages[i + 1][j]] {
+          return false
+        } else{
+          // if we find the first different character and they are sorted,
+          // then there's no need to check remaining letters
+          break
+        }
+      }
+    }
+  }
+  return true;
+}
+
+func main() {
+  // Driver Code
+  fmt.Println("Example - 1")
+  messages := []string{"alpha", "bravo", "charlie", "delta"}
+  key := "abcdlpite"
+  fmt.Println(verifyMessageIntegrity(messages, key))
+  fmt.Println("Example - 2")
+  messages = []string{"apple", "app"};
+  key = "apple";
+  fmt.Println(verifyMessageIntegrity(messages, key))
+}

@@ -1,0 +1,10 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+func calculator(expression string) int {
+    return -1;
+}

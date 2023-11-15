@@ -1,0 +1,73 @@
+package main
+import (
+  "fmt"
+  "math"
+)
+
+type TreeNode struct{
+    val int
+    left *TreeNode
+    right *TreeNode
+}
+
+var MaxSum int = math.MinInt64
+
+func maxContrib(node *TreeNode) int {
+    leftSubtree, rightSubtree := 0, 0
+    
+    if node == nil {
+        return 0
+    }
+      
+    // max sum on the left and right sub-trees of node
+    contrib := maxContrib(node.left)
+    if contrib > 0 {
+        leftSubtree = contrib
+    }
+    contrib = maxContrib(node.right)
+    if contrib > 0{
+        rightSubtree = contrib
+    }
+
+    // the price to start a new path where `node` is a highest node
+    priceNewPath := node.val + leftSubtree + rightSubtree
+
+    // update MaxSum if it's better to start a new path
+    MaxSum = int(math.Max(float64(MaxSum), float64(priceNewPath)))
+
+    // for recursion :
+    // return the max contribution if continue the same path
+    return node.val + int(math.Max(float64(leftSubtree), float64(rightSubtree)))
+}
+
+func maxPathSum(root *TreeNode) int {
+    maxContrib(root)
+    temp := MaxSum
+    MaxSum = math.MinInt64
+    return temp
+}
+
+func main() {
+    // Driver code
+    // Example - 1
+    root := &TreeNode{val: -8}
+
+    root.left = &TreeNode{val: 2}
+    root.right = &TreeNode{val: 17}
+    root.left.left = &TreeNode{val: 1}
+    root.left.right = &TreeNode{val: 4}
+    root.right.left = &TreeNode{val: 19}
+    root.right.right = &TreeNode{val: 5}
+
+    fmt.Println(maxPathSum(root))
+
+    // Example - 2
+    root2 := &TreeNode{val: 7}
+
+    root2.left = &TreeNode{val: 3}
+    root2.right = &TreeNode{val: 4}
+    root2.right.left = &TreeNode{val: -1}
+    root2.right.right =&TreeNode{val: -3}
+
+    fmt.Println(maxPathSum(root2))
+}

@@ -1,0 +1,11 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+func Divide(Dividend int, Divisor int) int{
+  // Your code goes here
+  return Dividend
+}

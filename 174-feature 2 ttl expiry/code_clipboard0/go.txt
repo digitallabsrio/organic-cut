@@ -1,0 +1,84 @@
+package main
+import (
+  "fmt"
+)
+
+type TreeNode struct{
+    val int
+    children []*TreeNode
+}
+
+func dfs(parent *TreeNode, child *TreeNode, neighbors map[int][]int) {
+    // DFS to build adjacency list
+    if child == nil {
+        return
+    }
+
+    if parent != nil {
+        if _, ok := neighbors[parent.val]; !ok{
+            neighbors[parent.val] =  []int{}
+        }
+            
+        if _, ok := neighbors[child.val]; !ok{
+            neighbors[child.val] =  []int{}
+        }
+
+        neighbors[parent.val] = append(neighbors[parent.val], child.val)
+        neighbors[child.val] = append(neighbors[child.val], parent.val)
+    }
+
+    for i := 0; i < len(child.children); i++{
+        dfs(child, child.children[i], neighbors)
+    }
+}
+
+func getDevices(root *TreeNode, server *TreeNode, ttl int) []int {
+
+    neighbors := make(map[int][]int) // Adjacency list
+    dfs(nil, root, neighbors)
+
+    // BFS to find nodes
+    var bfs []int
+    bfs = append(bfs, server.val)
+    lookup := make(map[int]bool)
+    for _, i := range bfs {
+        lookup[i] = true
+    }
+
+    for i := 0; i < ttl; i++ {
+        var temp []int
+        for _, node := range bfs{
+            for _, nei := range neighbors[node] {
+                if _, ok := lookup[nei]; !ok{
+                    temp = append(temp, nei)
+                }
+            }
+        }
+        bfs = temp
+        for _, i := range bfs {
+            lookup[i] = true
+        }
+    }
+    return bfs
+}
+
+func main() {
+    root := &TreeNode{val: 1}
+    root.children = append(root.children, &TreeNode{val: 2})
+    root.children = append(root.children, &TreeNode{val: 3})
+    root.children = append(root.children, &TreeNode{val: 4}) 
+    root.children[0].children = append(root.children[0].children, &TreeNode{val: 5}) 
+    root.children[0].children[0].children = append(root.children[0].children[0].children, &TreeNode{val: 10}) 
+    root.children[0].children = append(root.children[0].children, &TreeNode{val: 6}) 
+    root.children[0].children[1].children = append(root.children[0].children[1].children, &TreeNode{val: 11})
+    root.children[0].children[1].children = append(root.children[0].children[1].children, &TreeNode{val: 12})
+    root.children[0].children[1].children = append(root.children[0].children[1].children, &TreeNode{val: 13}) 
+    root.children[2].children = append(root.children[2].children, &TreeNode{val: 7})
+    root.children[2].children = append(root.children[2].children, &TreeNode{val: 8})
+    root.children[2].children = append(root.children[2].children, &TreeNode{val: 9})
+
+    server := root.children[0].children[1]
+    ttl := 2
+    
+    print(getDevices(root, server, ttl))
+}

@@ -1,0 +1,4 @@
+let multiply = function(firstNumber, secondNumber) {
+    // Write your code here  
+    return ''  
+};

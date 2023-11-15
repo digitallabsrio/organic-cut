@@ -1,0 +1,59 @@
+package main
+import (
+  "fmt"
+  "math"
+  "strconv"
+)
+
+func MaxContiguousArea(Grid [][]int) int{
+  Visited := make(map[string]bool)
+  ans := 0
+  for r := 0; r < len(Grid); r++ {
+    for c := 0; c < len(Grid[0]); c++ {
+      ans =  int(math.Max(float64(ans), float64(Area(Grid, Visited, r, c))))
+    }
+  }
+  return ans
+}
+
+func Area(Grid [][]int, Visited map[string]bool, r int, c int) int{
+  if r < 0 || r >= len(Grid) || c < 0 || c >= len(Grid[0]) || 
+  IsVisited(Visited, r, c) == true || Grid[r][c] == 0{
+      return 0
+  }
+  Visited[strconv.Itoa(r) + "," + strconv.Itoa(c)] = true
+  return (1 + Area(Grid, Visited, r + 1, c) + Area(Grid, Visited, r - 1, c) + Area(Grid, Visited, r, c - 1) + Area(Grid, Visited, r, c + 1))
+}
+
+func IsVisited(Visited map[string]bool, r int, c int) bool{
+  // return whether the cell was visited or not.
+  _, ok := Visited[strconv.Itoa(r) + "," + strconv.Itoa(c)]
+  return ok
+}
+
+// Driver code
+func main(){
+
+  // Example - 1
+  Grid := [][]int{
+    {0, 0, 1, 1, 0, 1},
+    {0, 0, 1, 0, 0, 0},
+    {1, 1, 1, 0, 1, 1},
+    {0, 1, 0, 1, 0, 0},
+    {1, 0, 1, 0, 0, 1}}
+  fmt.Println("Maximum Contiguous Area:", MaxContiguousArea(Grid))
+
+  // Example - 2
+  Grid = [][]int{
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}}
+  fmt.Println("Maximum Contiguous Area:", MaxContiguousArea(Grid))
+
+  // Example - 3
+  Grid = [][]int{
+    {1, 0, 1},
+    {0, 0, 0},
+    {1, 0, 1}}
+  fmt.Println("Maximum Contiguous Area:", MaxContiguousArea(Grid))
+}

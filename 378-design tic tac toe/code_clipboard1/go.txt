@@ -1,0 +1,75 @@
+package main
+import (
+    "fmt"
+    "math"
+)
+
+/* TicTacToe struct containing rows, cols, diagonal, 
+and antiDiagonal to create a board. */
+type TicTacToe struct {
+    rows []int
+    cols []int 
+    diagonal int
+    antiDiagonal int
+}
+
+/* Constructor is used to create n * n tic-tac-toe board. */
+func Constructor(n int) TicTacToe {
+    var tt TicTacToe
+    tt.rows = make([]int, n)
+    tt.cols = make([]int, n)
+    tt.diagonal = 0
+    tt.antiDiagonal = 0
+    return tt
+}
+
+/* Move function will allow the players to play the game for given
+row and col. */
+func (this *TicTacToe) Move(row int, col int, player int) int {
+    /* currentPlayer will be used to keep track of players, i.e.,
+     1 for player 1 and -1 for player 2. */
+    currentPlayer := -1
+    if player == 1 {
+        currentPlayer = 1
+    }
+    // Update currentPlayer in rows and cols arrays.
+    this.rows[row] += currentPlayer
+    this.cols[col] += currentPlayer
+    // Update diagonal.
+    if row == col {
+        this.diagonal += currentPlayer
+    }
+    // Update anti diagonal.
+    if col == (len(this.cols) - row -1) {
+        this.antiDiagonal += currentPlayer
+    }
+    n := len(this.rows)
+    // Check if the current player wins
+    if int(math.Abs(float64(this.rows[row]))) == n || 
+    int(math.Abs(float64(this.cols[col]))) == n || 
+    int(math.Abs(float64(this.diagonal))) == n ||
+    int(math.Abs(float64(this.antiDiagonal))) == n {
+        return player // If current player wins return player value
+    }
+    return 0 // Return 0 if no one wins
+}
+
+func main(){
+
+    input := [][]int{{3}, {0, 0, 1}, {0, 2, 2}, {2, 2, 1}, {1, 1, 2}, {2, 0, 1}, {1, 0, 2}, {2, 1, 1}}
+
+    ticTacToe := Constructor(input[0][0])
+    win := 0
+    for i := 1; i < len(input); i++{
+        fmt.Println("Player",input[i][2],"makes a move at (",input[i][0],",",input[i][1],")")
+        
+        win = ticTacToe.Move(input[i][0],input[i][1],input[i][2])
+
+        if win == 0{
+            fmt.Println("No one wins")
+        } else{
+            fmt.Println("Player",win,"wins")
+            break
+        }
+    }
+}

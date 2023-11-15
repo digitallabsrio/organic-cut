@@ -1,0 +1,62 @@
+package main
+import (
+    "fmt"
+    "math"
+)
+
+
+type TreeNode struct{
+    val int
+    children []*TreeNode
+}
+
+var MaxDiff int = 0
+
+func dfs(node *TreeNode, maxiVal int, miniVal int) {
+
+    if node == nil {
+        return
+    }
+    // update `maxDiff`
+    possibleMaxDiff := int(math.Max(math.Abs(float64(maxiVal - node.val)), math.Abs(float64(miniVal - node.val))))
+    MaxDiff = int(math.Max(float64(MaxDiff), float64(possibleMaxDiff)))
+    
+    // update the maxiVal and miniVal
+    maxiVal = int(math.Max(float64(maxiVal), float64(node.val)))
+    miniVal = int(math.Min(float64(miniVal), float64(node.val)))
+    
+    for _, child := range node.children {
+        dfs(child, maxiVal, miniVal)
+    }
+    return
+}
+
+func maxClockSkew(root *TreeNode) int{
+    if root == nil {
+        return 0
+    }
+    MaxDiff = 0
+
+    dfs(root, root.val, root.val)
+    return MaxDiff
+}
+
+
+func main() {
+    // Driver code
+    root := &TreeNode{val: 8}
+    root.children = append(root.children, &TreeNode{val: 3})
+    root.children = append(root.children, &TreeNode{val: 10})
+    root.children = append(root.children, &TreeNode{val: 12}) 
+    root.children[0].children = append(root.children[0].children, &TreeNode{val: 6}) 
+    root.children[0].children[0].children = append(root.children[0].children[0].children, &TreeNode{val: 1}) 
+    root.children[0].children = append(root.children[0].children, &TreeNode{val: 5}) 
+    root.children[0].children[1].children = append(root.children[0].children[1].children, &TreeNode{val: 2})
+    root.children[0].children[1].children = append(root.children[0].children[1].children, &TreeNode{val: 3})
+    root.children[0].children[1].children = append(root.children[0].children[1].children, &TreeNode{val: 4}) 
+    root.children[2].children = append(root.children[2].children, &TreeNode{val: 8})
+    root.children[2].children = append(root.children[2].children, &TreeNode{val: 7})
+    root.children[2].children = append(root.children[2].children, &TreeNode{val: 9})
+
+    fmt.Printf("The maximum clock skew we'll encounter is: %d seconds\n", maxClockSkew(root))
+}

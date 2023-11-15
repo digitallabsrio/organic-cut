@@ -1,0 +1,14 @@
+package main
+import (
+    "fmt"
+    "strconv"
+    "encoding/json"
+)
+
+
+func clockAngle(hour int, minutes int) float64 {
+    
+    // Your code goes here
+    
+    return 0.1 // Change the return value as per your requirement
+}

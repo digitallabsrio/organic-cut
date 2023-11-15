@@ -1,0 +1,15 @@
+package main
+import (
+    "fmt"
+    "encoding/json"
+)
+
+type LinkedListNode struct {
+	val              int
+	next             *LinkedListNode
+}
+
+func addTwoNumbers2(list1, list2 *LinkedListNode) *LinkedListNode{
+    // write your code here
+    return list1;
+}

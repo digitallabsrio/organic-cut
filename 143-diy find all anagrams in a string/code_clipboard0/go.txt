@@ -1,0 +1,10 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+)
+
+func findAnagrams(s, t string) []int {
+    // write your code here
+    return []int{}
+}

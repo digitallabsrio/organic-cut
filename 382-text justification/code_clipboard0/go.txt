@@ -1,0 +1,13 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+  "strings"
+)
+
+func TextJustify(Words []string, Width int) []string {
+  result := []string{}
+  // Write your code here
+  return result
+}

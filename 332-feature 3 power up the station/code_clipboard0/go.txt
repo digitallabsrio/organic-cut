@@ -1,0 +1,61 @@
+package main
+import (
+    "fmt"
+    "container/list"
+    "strconv"
+)
+
+func neighbors(str string) []string{
+    var res []string
+    for i := 0; i < len(str); i++ {
+        num := int(str[i] - '0')
+        // Calculate the new state by moving the current number in 
+        // opposite direction
+        res = append(res, str[:i] + strconv.Itoa((num - 1) % 10) + str[i+1:])
+        // Calculate the new state by moving the current number in 
+        // forward direction
+        res = append(res, (str[:i] + strconv.Itoa((num + 1) % 10) + str[i+1:]))
+        
+    }
+    return res
+}
+
+func powerUp(deadStates []string, target string) int {
+    q := list.New()
+    visited := make(map[string]bool)
+    for _, i := range deadStates {
+        visited[i] = true
+    }
+
+    depth := -1
+    q.PushBack("0000")
+    for q.Len() != 0 {
+        depth++
+        size := q.Len()
+        for i := 0; i < size; i++ {
+            temp := q.Front()
+            q.Remove(temp)
+            node := temp.Value.(string)
+            if node == target {
+                return depth
+            }
+            if _, ok := visited[node]; ok {
+                continue
+            }
+            visited[node] = true
+            neighbor := neighbors(node)
+            for _, n := range neighbor {
+                q.PushBack(n)
+            }
+        }
+    }
+    return -1
+}
+
+func main() {
+    // Driver code
+
+    deadStates := []string{"0201","0101","0102","1212","2002"}
+    target := "0202"
+    fmt.Printf("The system will power up in %v dial turns\n", powerUp(deadStates, target))
+}

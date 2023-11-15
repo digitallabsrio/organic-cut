@@ -1,0 +1,30 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "strings"
+  "encoding/json"
+)
+
+type WordDictionary struct{
+    // Write your code here
+}
+/** Initialize your data structure here. */
+func NewWordDictionary() *WordDictionary {
+    // Write your code here
+    return new(WordDictionary)
+}
+
+func (this *WordDictionary) AddWord(word string) {
+    // Write your code here
+}
+
+func (this *WordDictionary) Search(word string) bool {
+    // Write your code here 
+    return false
+}
+
+func (this *WordDictionary) GetWords() []string{
+    // Write your code here
+    return []string{}
+}

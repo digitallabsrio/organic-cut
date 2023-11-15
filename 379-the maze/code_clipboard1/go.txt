@@ -1,0 +1,57 @@
+package main
+import (
+  "fmt"
+)
+
+func HasPath(Maze [][]int, Start []int, End []int) bool {
+  VisitedPlaces, i, length := make([][]bool, len(Maze)), 0, len(Maze)
+  for i = 0; i < length; i++ {
+    VisitedPlaces[i] = make([]bool, len(Maze[i]))
+  }
+  return Path(Maze, Start, End, VisitedPlaces)
+}
+
+func Path(Maze [][]int, Start []int, End []int, VisitedPlaces [][]bool) bool{
+  if VisitedPlaces[Start[0]][Start[1]] == true {
+    return false
+  }
+        
+  if Start[0] == End[0] && Start[1] == End[1] {
+    return true;
+  }    
+  VisitedPlaces[Start[0]][Start[1]] = true;
+  r := Start[1] + 1; l := Start[1] - 1; u := Start[0] - 1; d := Start[0] + 1;
+  for u >= 0 && Maze[u][Start[1]] == 0 { //up 
+    u--;
+  }   
+  if Path(Maze, []int{u + 1, Start[1]}, End, VisitedPlaces) {
+    return true
+  }   
+  for d < len(Maze) && Maze[d][Start[1]] == 0 { //down
+    d++
+  }   
+  if Path(Maze, []int{d - 1, Start[1]}, End, VisitedPlaces) {
+    return true
+  }   
+  for l >= 0 && Maze[Start[0]][l] == 0 { //left
+    l--;
+  }   
+  if Path(Maze, []int{Start[0], l + 1}, End, VisitedPlaces) {
+    return true
+  }  
+  for r < len(Maze[0]) && Maze[Start[0]][r] == 0 { //right
+    r++;
+  }   
+  if Path(Maze, []int{Start[0], r - 1}, End, VisitedPlaces){
+    return true
+  }    
+  return false
+}
+
+func main(){
+  Maze := [][]int{{0,0,0,0,1},{0,0,1,1,1},{0,0,0,0,0},{1,1,1,1,0},{0,0,0,0,0}}
+  Start := []int{0, 3}
+  End := []int{4, 3}
+
+  fmt.Print(HasPath(Maze, Start, End))
+}

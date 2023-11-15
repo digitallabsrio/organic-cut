@@ -1,0 +1,98 @@
+package main
+import (
+  "fmt"
+)
+
+func Bfs(queue *Queue, heights [][]int) [][]bool{
+    numRows := len(heights)
+    numCols := len(heights[0])
+    reachable := make([][]bool, numRows)
+    for i := 0; i < numRows; i++{
+        temp := make([]bool, 0)
+        for j := 0; j < numCols; j++ {
+            temp = append(temp, false)
+        }
+        reachable[i] = temp
+    }
+    directions := [][]int{{0, 1}, {1, 0}, {-1, 0}, {0, -1}}
+    for !queue.Empty() {
+        cell := queue.Peek()
+        queue.Remove()
+        // This cell is reachable, so mark it
+        reachable[cell[0]][cell[1]] = true
+        for _, dir := range directions { // Check all 4 directions
+            newRow := cell[0] + dir[0]
+            newCol := cell[1] + dir[1]
+            // Check if new cell is within bounds
+            if newRow < 0 || newRow >= numRows || newCol < 0 || newCol >= numCols {
+                continue
+            }
+            // Check that the new cell hasn't already been visited
+            if reachable[newRow][newCol] {
+                continue
+            }
+            // Check that the new cell has a higher or equal height,
+            // So that water can flow from the new cell to the old cell
+            if heights[newRow][newCol] < heights[cell[0]][cell[1]] {
+                continue
+            }
+            // If we've gotten this far, that means the new cell is reachable
+            queue.Add([]int{newRow, newCol})
+        }
+    }
+    return reachable
+}
+
+func PacificAtlantic(heights [][]int) [][]int{
+    // Check if input is empty
+    if len(heights) == 0 || len(heights[0]) == 0 {
+        return [][]int{}
+    }
+
+    // Save initial values to parameters
+    numRows := len(heights)
+    numCols := len(heights[0])
+    
+    // Setup each queue with cells adjacent to their respective ocean
+    pacificQueue, atlanticQueue := new(Queue), new(Queue)
+    for i := 0; i < numRows; i++ {
+        pacificQueue.Add([]int{i, 0})
+        atlanticQueue.Add([]int{i, numCols - 1})
+    }
+    for i := 0; i < numCols; i++ {
+        pacificQueue.Add([]int{0, i})
+        atlanticQueue.Add([]int{numRows - 1, i})
+    }
+    
+    // Perform a Bfs for each ocean to find all cells accessible by each ocean
+    pacificReachable := Bfs(pacificQueue, heights)
+    atlanticReachable := Bfs(atlanticQueue, heights)
+    // Find all cells that can reach both oceans
+    commonCells := make([][]int, 0)
+    for i := 0; i < numRows; i++ {
+        for j := 0; j < numCols; j++ {
+            if pacificReachable[i][j] && atlanticReachable[i][j] {
+                commonCells = append(commonCells, []int{i, j})
+            }
+        }
+    }
+    return commonCells
+}
+
+func main(){
+    // driver code
+  
+  // Example - 1
+  heights := [][]int{{2, 1}, {1, 2}}
+  output := PacificAtlantic(heights)
+  fmt.Println(output)
+
+  // Example - 2
+  heights = [][]int{{1, 2, 3, 2, 6}, {3, 2, 5, 4, 5}, {1, 4, 6, 3, 2}, {6, 7, 2, 4, 3}, {5, 1, 1, 1, 4}}
+  output = PacificAtlantic(heights)
+  fmt.Println(output)
+
+  heights = [][]int{{1, 3, 2}, {2, 3, 2}, {3, 2, 1}};
+  output = PacificAtlantic(heights);
+  fmt.Println(output)
+}

@@ -1,0 +1,52 @@
+package main
+import (
+  "fmt"
+  "strings"
+)
+
+func TextJustify(Words []string, Width int) []string {
+  n := len(Words)
+  res := []string{}
+  j, i, length := 0, 0, 0
+  for i = 0; i < n; i = j {
+    length = -1
+    for j = i; j < n && length + 1 + len(Words[j]) <= Width; j++ {
+      length += 1 + len(Words[j])
+    }
+
+    spaces := 1; 
+    extra := 0; // extra left spaces
+
+    if j != i + 1 && j != n {
+      spaces = (Width - length) / (j - 1 - i) + 1;
+      extra = (Width - length) % (j - 1 - i);
+    }
+    // Build the row with spaces + extra space + word
+    row := Words[i];
+    for k := i + 1; k < j; k++ {
+      if extra > 0 {
+        row += strings.Repeat(" ", spaces + 1) + Words[k]
+      } else {
+        row += strings.Repeat(" ", spaces) + Words[k]
+      }
+      extra--
+    }
+    row += strings.Repeat(" ", Width - len(row))
+    res = append(res, row)
+  }
+  return res
+}
+
+func main(){
+  Words := []string{"The", "important", "is", "not", "to", "stop", "questioning"}
+  Width := 16;
+  output := TextJustify(Words, Width)
+  fmt.Print("[")
+  for i := 0; i < len(output); i++{
+    fmt.Print("\"" + output[i] + "\"")
+    if i < len(output) - 1{
+      fmt.Print(", ")
+    }
+  }
+  fmt.Print("]")
+}

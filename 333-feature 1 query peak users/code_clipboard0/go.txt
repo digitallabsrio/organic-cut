@@ -1,0 +1,97 @@
+package main
+import (
+  "fmt"
+)
+
+type PeakUsers struct{
+  Users [][]int
+  Cache [][]int
+  SmartCache [][]int
+}
+
+func Constructor(Users [][]int) PeakUsers{
+
+  // Declaring PUsers object
+  PUsers := PeakUsers{}
+
+  // Section Start - Brute Force
+  PUsers.Users = Users
+  // Section End - Brute Force
+
+  // Section Start - Caching Rows
+  if len(Users) == 0 || len(Users[0]) == 0 { return PUsers}
+  PUsers.Cache = make([][]int, len(Users))
+  for i := 0; i < len(Users); i++{
+    PUsers.Cache[i] = make([]int, len(Users[0]) + 1)
+    for j := 0; j < len(Users[0]); j++{
+      PUsers.Cache[i][j + 1] = PUsers.Cache[i][j] + Users[i][j]
+    }
+  }
+  // Section End - Caching Rows
+
+  // Section Start - Caching Smart
+  if len(Users) == 0 || len(Users[0]) == 0 { return PUsers}
+  PUsers.SmartCache = make([][]int, len(Users) + 1)
+  for i := 0; i < len(Users) + 1; i++{
+    PUsers.SmartCache[i] = make([]int, len(Users[0]) + 1)
+  }
+  for i := 0; i < len(Users); i++{
+    for j := 0; j < len(Users[0]); j++{
+      PUsers.SmartCache[i + 1][j + 1] = PUsers.SmartCache[i + 1][j] + PUsers.SmartCache[i][j + 1] + Users[i][j] - PUsers.SmartCache[i][j]
+    }
+  }
+  // Section End - Caching Smart
+
+  return PUsers
+}
+
+// Brute Force
+func (this PeakUsers) BruteForce(row1, col1, row2, col2 int) int {
+  sum := 0
+  for r := row1; r <= row2; r++{
+    for c := col1; c <= col2; c++{
+      sum += this.Users[r][c]
+    }
+  }
+  return sum
+}
+
+// Caching Rows
+func (this PeakUsers) CacheRows(row1, col1, row2, col2 int) int{
+  sum := 0
+  for i := row1; i <= row2; i++{
+    sum += this.Cache[i][col2 + 1] - this.Cache[i][col1]
+  }
+  return sum
+}
+
+// Caching Smarter
+func (this PeakUsers) CacheSmart(row1, col1, row2, col2 int) int{
+  return this.SmartCache[row2 + 1][col2 + 1] - this.SmartCache[row1][col2 + 1] - this.SmartCache[row2 + 1][col1] + this.SmartCache[row1][col1]
+}
+
+func main(){
+  Users := [][]int{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}
+  peakUsers := Constructor(Users)
+
+  // Example - 1
+  row1, col1, row2, col2 := 0, 1, 2, 2
+  fmt.Println("Example - 1:")
+  fmt.Println("Peak Number of Users (Brute Force): ", peakUsers.BruteForce(row1,col1,row2,col2))
+  fmt.Println("Peak Number of Users (Caching Rows): ", peakUsers.CacheRows(row1,col1,row2,col2))
+  fmt.Println("Peak Number of Users (Caching Smarter): ", peakUsers.CacheSmart(row1,col1,row2,col2))
+
+  // Example - 2
+  row1, col1, row2, col2 = 1, 1, 2, 2
+  fmt.Println("Example - 2:")
+  fmt.Println("Peak Number of Users (Brute Force): ", peakUsers.BruteForce(row1,col1,row2,col2))
+  fmt.Println("Peak Number of Users (Caching Rows): ", peakUsers.CacheRows(row1,col1,row2,col2))
+  fmt.Println("Peak Number of Users (Caching Smarter): ", peakUsers.CacheSmart(row1,col1,row2,col2))
+
+  // Example - 3
+  row1, col1, row2, col2 = 0, 0, 2, 2
+  fmt.Println("Example - 3:")
+  fmt.Println("Peak Number of Users (Brute Force): ", peakUsers.BruteForce(row1,col1,row2,col2))
+  fmt.Println("Peak Number of Users (Caching Rows): ", peakUsers.CacheRows(row1,col1,row2,col2))
+  fmt.Println("Peak Number of Users (Caching Smarter): ", peakUsers.CacheSmart(row1,col1,row2,col2))
+}

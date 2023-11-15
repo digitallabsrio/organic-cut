@@ -1,0 +1,21 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+  "strconv"
+  "sort"
+)
+
+type Solution struct{
+    // write your code
+    // declare the data structures here
+}
+
+func newSolution(nums []int) *Solution {
+    // Initialize the data structrues here
+    return &Solution{}
+}
+
+func (s *Solution) Pick(target int) int{
+    return - 1
+}

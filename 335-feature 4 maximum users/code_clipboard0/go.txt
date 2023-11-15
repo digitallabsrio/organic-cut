@@ -1,0 +1,33 @@
+package main
+import (
+  "fmt"
+)
+
+func MaxUsers(array []int, size int, k int) []int{
+  mqueue := []int{} // Store given array indices. 
+  result := []int{} // Store maximum value of every window slide.
+
+  for i := 0; i < size; i++{
+    for len(mqueue) > 0 && array[mqueue[len(mqueue) - 1]] <= array[i]{
+      mqueue = mqueue[:len(mqueue)-1]
+    } 
+    mqueue = append(mqueue, i) 
+    // Remove first element if it's outside the window slide.
+    if mqueue[0] == i - k{
+      mqueue = mqueue[1:len(mqueue)]
+      fmt.Println(mqueue)
+    }
+    // If given array index greater than or equal to the window slide size, then push the maximum value in result array.
+    if i >= k - 1{
+      result = append(result, array[mqueue[0]])
+    }
+  }
+  return result
+}
+// Driver code
+func main(){
+  array := []int{4,7,12,16,8,3,13,20,5,9,22,2}
+  size := len(array)
+  k := 7
+  fmt.Println(MaxUsers(array, size, k))
+}

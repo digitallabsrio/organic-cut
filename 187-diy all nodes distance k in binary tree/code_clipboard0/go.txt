@@ -1,0 +1,17 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+func distanceK(root *TreeNode, target *TreeNode, K int) []int {
+    // Write your code here
+    return []int{}
+}
+
+type TreeNode struct{
+    val int
+    left *TreeNode
+    right *TreeNode
+}

@@ -1,0 +1,20 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+  "reflect"
+  "math"
+  "strings"
+)
+
+/* using Solution struct to declare any global variable you would need to use.
+Otherwise you can leave it empty. */
+type Solution struct{
+  // pass
+}
+
+func (this *Solution) BuildBinaryTree(PreOrder []int, InOrder []int) *TreeNode{
+  // Write your code here
+  return InitNewTreeNode()
+}

@@ -1,0 +1,12 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+  "strings"
+)
+
+func AlienOrder(words []string) string {
+  result := ""
+  // Your code goes here
+  return result
+}

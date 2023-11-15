@@ -1,0 +1,15 @@
+  package main
+import (
+    "fmt"
+    "encoding/json"
+)
+
+type Interval struct {
+    start int
+    end int
+}
+
+func employeeFreeTime(schedule [][]Interval) []Interval {
+    // write your code here
+    return []Interval{};    
+}

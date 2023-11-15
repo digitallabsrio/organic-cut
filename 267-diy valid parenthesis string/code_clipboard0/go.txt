@@ -1,0 +1,10 @@
+package main
+import (
+  "fmt"
+  "encoding/json"
+)
+
+func checkValidString(s string) bool {
+    // write your code here
+    return false
+}

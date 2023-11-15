@@ -1,0 +1,32 @@
+package main
+import (
+    "fmt"
+    "strconv"
+    "encoding/json"
+)
+
+type FreqStack struct {
+    
+    // Your code goes here
+
+}
+
+func Constructor() FreqStack {
+    
+    // Your code goes here
+
+    return FreqStack{}
+}
+
+func (this *FreqStack) Push(data int)  {
+    
+    // Your code goes here
+
+}
+
+func (this *FreqStack) Pop() int {
+
+    // Your code goes here
+
+    return -1 // Return -1 in case stack is empty
+}

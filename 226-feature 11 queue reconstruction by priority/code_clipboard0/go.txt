@@ -1,0 +1,55 @@
+package main
+import (
+  "fmt"
+  "sort"
+)
+
+type Tuple struct{
+  a int
+  b int
+}
+
+func ReconstructQueue(process [][]int) [][]int{
+  temp := make([]Tuple, 0)
+  temp2 := make([]Tuple, len(process))
+  for i := 0; i < len(process); i++{
+    t := Tuple{a : process[i][0], b : process[i][1]}
+    temp = append(temp, t)
+  }
+  // First sort processes by priority and then by the k value.
+  // priority in descending order and k value in ascending order.
+  sort.SliceStable(temp, func(i, j int) bool {
+    return temp[i].a > temp[j].a
+  })
+  sort.SliceStable(temp, func(i, j int) bool {
+    return (temp[i].a == temp[j].a && temp[i].b < temp[j].b)
+  })
+  for i := 0; i < len(temp); i++ {
+    index := temp[i].b
+    temp2 = append(temp2[:index+1], temp2[index:]...)
+    temp2[index] = temp[i]
+  }
+  // Place the result back in original 2d array
+  for l := 0; l < len(process); l++ {
+      process[l][0] = temp2[l].a
+      process[l][1] = temp2[l].b
+  }
+  return process
+}
+
+func main() {
+    p := [][]int{{7,0}, {4,4},{7,1},{5,0},{6,1},{5,2}}
+    sol := ReconstructQueue(p);
+
+    fmt.Print("[");
+    for i := 0; i < len(sol) ; i++ {
+        fmt.Print("[");
+        for j := 0; j < len(sol[0]) ; j++ {
+            fmt.Print(sol[i][j]);
+            if(j==0) { fmt.Print(","); }        
+        }
+        fmt.Print("]");
+        if i != len(sol) - 1 {  fmt.Print(",") }       
+    }
+    fmt.Print("]");
+}

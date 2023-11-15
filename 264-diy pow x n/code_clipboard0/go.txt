@@ -1,0 +1,11 @@
+package main
+import (
+  "fmt"
+  "strconv"
+  "encoding/json"
+)
+
+func Pow(base float64, power int) float64{
+  // Your code goes here
+  return base
+}
